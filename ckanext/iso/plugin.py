@@ -17,17 +17,15 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print('MB_edit_03__update_frequ:')
         print(iso_values['frequency-of-update'])
 
-        package_dict['extras'].append(
-            {'key': 'schema', 'value': 'baug'},
-            {'key': 'ext_org', 'value': iso_values['responsible-organisation'][0]['organisation-name']},
-            {'key': 'timeliness', 'value': 'auf_anforderung'},
-            {'key': 'geometry_type', 'value': 'point'},
-            {'key': 'archive', 'value': {"archivability": "archivwuerdig", "justification": ""}},
-            {'key': 'intranet', 'value': {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}},
-            {'key': 'internet_publish', 'value': 'backend'},
-            {'key': 'datenabgabe_extern_mit_auftrag', 'value': 'yes'},
-            {'key': 'open_data', 'value': 'no'}
-        )
+        package_dict['extras'].append({'key': 'schema', 'value': 'baug'})
+        package_dict['extras'].append({'key': 'ext_org', 'value': iso_values['responsible-organisation'][0]['organisation-name']})
+        package_dict['extras'].append({'key': 'timeliness', 'value': 'auf_anforderung'})
+        package_dict['extras'].append({'key': 'geometry_type', 'value': 'point'})
+        package_dict['extras'].append({'key': 'archive', 'value': {"archivability": "archivwuerdig", "justification": ""}})
+        package_dict['extras'].append({'key': 'intranet', 'value': {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}})
+        package_dict['extras'].append({'key': 'internet_publish', 'value': 'backend'})
+        package_dict['extras'].append({'key': 'datenabgabe_extern_mit_auftrag', 'value': 'yes'})
+        package_dict['extras'].append({'key': 'open_data', 'value': 'no'})
 
         package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
         package_dict['author_email'] = iso_values['responsible-organisation'][0]['contact-info']['email']
