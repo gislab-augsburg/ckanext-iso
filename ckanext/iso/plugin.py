@@ -15,21 +15,19 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print(iso_values['frequency-of-update'])
 
         package_dict['extras'].append(
-            {'key': 'positional_accuracy', 'value': 'tachymeter'}
+            {'key': 'schema', 'value': 'baug'},
+            {'key': 'ext_org', 'value': 'TBA'},
+            {'key': 'timeliness', 'value': 'auf_anforderung'},
+            {'key': 'geometry_type', 'value': 'point'},
+            {'key': 'archive', 'value': {"archivability": "archivwuerdig", "justification": ""}},
+            {'key': 'intranet', 'value': {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}},
+            {'key': 'internet_publish', 'value': 'backend'},
+            {'key': 'datenabgabe_extern_mit_auftrag', 'value': 'yes'},
+            {'key': 'open_data', 'value': 'no'}
         )
 
-        package_dict['schema'] = 'baug'
         package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
         package_dict['author_email'] = iso_values['responsible-organisation'][0]['contact-info']['email']
-        package_dict['ext_org'] = 'TBA'
-        package_dict['timeliness'] = 'auf_anforderung'
-        package_dict['geometry_type'] = 'point'
-        package_dict['archive'] = 'noch_offen'
-        package_dict['fachverfahren'] = 'alle_mit_geoinfoweb'
-        package_dict['geoinfoweb'] = 'alle_nutzer'
-        package_dict['internet_publish'] = 'backend'
-        package_dict['datenabgabe_extern_mit_auftrag'] = 'yes'
-        package_dict['open_data'] = 'no'
 
         return package_dict
 
