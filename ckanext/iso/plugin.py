@@ -9,6 +9,16 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
         package_dict = data_dict['package_dict']
 
+        print('MB_edit_04__package_dict:')
+        print(len(data_dict))
+        print('--------')
+        print(data_dict)
+        print('---------------------------')
+        for el in data_dict:
+            print(el)
+        print('-----------------------------------------') 
+        
+
         print('MB_edit_03__individual-name:')
         print(iso_values['responsible-organisation'][0]['individual-name'])
         print('MB_edit_03__update_frequ:')
