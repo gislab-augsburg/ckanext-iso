@@ -8,16 +8,9 @@ class LHM_GP_Harvester(p.SingletonPlugin):
     def get_package_dict(self, context, data_dict):
 
         package_dict = data_dict['package_dict']
-
-        print('MB_edit_04__package_dict:')
-        print(len(data_dict))
-        print('--------')
-        print(data_dict)
-        print('---------------------------')
-        for el in data_dict:
-            print(el)
-        print('-----------------------------------------') 
-        
+        iso_values = data_dict['iso_values']
+        xml_tree = data_dict['xml_tree']
+        harvest_object = data_dict['harvest_object']        
 
         print('MB_edit_03__individual-name:')
         print(iso_values['responsible-organisation'][0]['individual-name'])
@@ -26,7 +19,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
         package_dict['extras'].append(
             {'key': 'schema', 'value': 'baug'},
-            {'key': 'ext_org', 'value': 'TBA'},
+            {'key': 'ext_org', 'value': iso_values['responsible-organisation'][0]['organisation-name']},
             {'key': 'timeliness', 'value': 'auf_anforderung'},
             {'key': 'geometry_type', 'value': 'point'},
             {'key': 'archive', 'value': {"archivability": "archivwuerdig", "justification": ""}},
