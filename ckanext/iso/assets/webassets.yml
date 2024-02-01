@@ -1,0 +1,14 @@
+# glab-js:
+#   filter: rjsmin
+#   output: ckanext-glab/%(version)s-glab.js
+#   contents:
+#     - js/glab.js
+#   extra:
+#     preload:
+#       - base/main
+
+# glab-css:
+#   filter: cssrewrite
+#   output: ckanext-glab/%(version)s-glab.css
+#   contents:
+#     - css/glab.css
