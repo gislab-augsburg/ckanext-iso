@@ -16,7 +16,8 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print(iso_values['responsible-organisation'][0]['individual-name'])
         print('MB_edit_03__update_frequ:')
         print(iso_values['frequency-of-update'])
-        print('MB_edit_03__extras:')
+        print('MB_edit_03__check_package_dict_before:')
+        print(package_dict)
         print(package_dict['extras'])
 
         package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
@@ -33,6 +34,9 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         package_dict['extras'].append({'key': 'datenabgabe_extern', 'value': 'no'})
         package_dict['extras'].append({'key': 'open_data', 'value': 'no'})
 
+        print('MB_edit_04__check_package_dict_after:')
+        print(package_dict)
+        print(package_dict['extras'])
 
 
         return package_dict
