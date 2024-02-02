@@ -16,6 +16,11 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print(iso_values['responsible-organisation'][0]['individual-name'])
         print('MB_edit_03__update_frequ:')
         print(iso_values['frequency-of-update'])
+        print('MB_edit_03__extras:')
+        print(package_dict['extras'])
+
+        package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
+        package_dict['author_email'] = iso_values['responsible-organisation'][0]['contact-info']['email']
 
         package_dict['extras'].append({'key': 'schema', 'value': 'baug'})
         package_dict['extras'].append({'key': 'ext_org', 'value': iso_values['responsible-organisation'][0]['organisation-name']})
@@ -25,10 +30,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         package_dict['extras'].append({'key': 'intranet', 'value': {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}})
         package_dict['extras'].append({'key': 'internet_publish', 'value': 'backend'})
         package_dict['extras'].append({'key': 'datenabgabe_extern_mit_auftrag', 'value': 'yes'})
+        package_dict['extras'].append({'key': 'datenabgabe_extern', 'value': 'no'})
         package_dict['extras'].append({'key': 'open_data', 'value': 'no'})
 
-        package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
-        package_dict['author_email'] = iso_values['responsible-organisation'][0]['contact-info']['email']
+
 
         return package_dict
 
