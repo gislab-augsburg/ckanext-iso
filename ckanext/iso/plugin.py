@@ -18,24 +18,25 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print(iso_values['frequency-of-update'])
         print('MB_edit_03__check_package_dict_before:')
         print(package_dict)
+        print('-----------------------------------------')
         print(package_dict['extras'])
 
         package_dict['author'] = iso_values['responsible-organisation'][0]['individual-name']
         package_dict['author_email'] = iso_values['responsible-organisation'][0]['contact-info']['email']
-
-        package_dict['extras'].append({'key': 'schema', 'value': 'baug'})
-        package_dict['extras'].append({'key': 'ext_org', 'value': iso_values['responsible-organisation'][0]['organisation-name']})
-        package_dict['extras'].append({'key': 'timeliness', 'value': 'auf_anforderung'})
-        package_dict['extras'].append({'key': 'geometry_type', 'value': 'point'})
-        package_dict['extras'].append({'key': 'archive', 'value': {"archivability": "archivwuerdig", "justification": ""}})
-        package_dict['extras'].append({'key': 'intranet', 'value': {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}})
-        package_dict['extras'].append({'key': 'internet_publish', 'value': 'backend'})
-        package_dict['extras'].append({'key': 'datenabgabe_extern_mit_auftrag', 'value': 'yes'})
-        package_dict['extras'].append({'key': 'datenabgabe_extern', 'value': 'no'})
-        package_dict['extras'].append({'key': 'open_data', 'value': 'no'})
+        package_dict['schema'] = 'baug'
+        package_dict['ext_org'] = iso_values['responsible-organisation'][0]['organisation-name']
+        package_dict['timeliness'] = 'auf_anforderung'
+        package_dict['geometry_type'] = 'point'
+        package_dict['archive'] = {"archivability": "archivwuerdig", "justification": ""}
+        package_dict['intranet'] = {"fachverfahren": "alle_mit_geoinfoweb", "geoinfoweb": "alle_nutzer"}
+        package_dict['internet_publish'] = 'backend'
+        package_dict['datenabgabe_extern_mit_auftrag'] = 'yes'
+        package_dict['datenabgabe_extern'] = 'no'
+        package_dict['open_data'] = 'no'
 
         print('MB_edit_04__check_package_dict_after:')
         print(package_dict)
+        print('-----------------------------------------')
         print(package_dict['extras'])
 
 
