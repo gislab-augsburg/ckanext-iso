@@ -1,0 +1,137 @@
+scheming_version: 2
+dataset_type: isodata
+about: The default Munich(LHM) catalog dataset schema with form split across multiple pages
+about_url: http://github.com/ckan/ckanext-scheming
+
+dataset_fields:
+
+- field_name: title
+  label: Title
+  preset: title
+  form_placeholder: eg. A descriptive title
+
+- field_name: name
+  label: URL
+  preset: dataset_slug
+  form_placeholder: eg. my-dataset
+
+- field_name: notes
+  label: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+
+- field_name: tag_string
+  label: Tags
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+
+- field_name: owner_org
+  label: 
+    en: Responsible organization
+    de: Fachl. Zuständigkeit
+  preset: dataset_organization
+
+- field_name: author
+  label: 
+    en: Contact person
+    de: Ansprechpartner
+  #required: true
+  form_snippet: author.html
+  form_placeholder: Erika Mustermann / KR-GSM-GEO-GIS
+
+- field_name: author_email
+  label: 
+    en: Contact person Email
+    de: Ansprechpartner E-Mail
+  #required: true
+  form_placeholder: erika.mustermann@muenchen.de / gdi@muenchen.de
+  form_snippet: author_email.html
+  display_snippet: email.html
+  validators: not_empty unicode_safe strip_value email_validator
+
+- field_name: timeliness
+  label: 
+    en: Timeliness
+    de: Update-Zyklus
+
+# ------------------------------------------------------------
+
+# - field_name: harvest_source 
+#   label: harvest_source 
+
+- field_name: guid
+  label: GUID
+
+# - field_name: metadata-language
+#   label: metadata-language
+
+# - field_name: metadata-date
+#   label: metadata-date
+
+# - field_name: metadata-standard-name
+#   label: metadata-standard-name
+
+# - field_name: metadata-standard-version
+#   label: metadata-standard-version
+
+# - field_name: resource-type
+#   label: resource-type
+
+#  #- field_name: metadata-point-of-contact
+#  #  label: metadata-point-of-contact
+
+# - field_name: contact-email
+#   label: contact-email
+
+# - field_name: spatial-data-service-type
+#   label: spatial-data-service-type
+
+# - field_name: progress
+#   label: progress
+
+#  #- field_name: access_constraints
+#  #  label: access_constraints
+ 
+#  #- field_name: responsible-party
+#  #  label: responsible-party
+
+- field_name: spatial-reference-system
+  label: spatial-reference-system
+
+- field_name: spatial
+  label: spatial
+
+# - field_name: lineage
+#   label: lineage
+
+
+# ------------------------------------------------------------
+
+resource_fields:
+
+- field_name: url
+  label: URL
+  preset: resource_url_upload
+
+- field_name: name
+  label: Name
+  form_placeholder: 
+    en: e.g. January 2011 Gold Prices
+    de: z. B. 3D Stadtmodell
+
+- field_name: description
+  label: Description
+  form_snippet: markdown.html
+  form_placeholder: Some useful notes about the data
+
+- field_name: format
+  label: Format
+  preset: resource_format_autocomplete
+
+# ------------------------------------------------------------
+
+- field_name: resource_locator_function
+  label: resource_locator_function
+
+- field_name: resource_locator_protocol
+  label: resource_locator_protocol

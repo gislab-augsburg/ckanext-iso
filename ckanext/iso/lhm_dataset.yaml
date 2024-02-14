@@ -1,0 +1,501 @@
+scheming_version: 2
+dataset_type: dataset
+about: The default Munich(LHM) catalog dataset schema with form split across multiple pages
+about_url: http://github.com/ckan/ckanext-scheming
+
+dataset_fields:
+- field_name: title
+  label: Title
+  preset: title
+  form_placeholder: eg. A descriptive title
+- field_name: name
+  label: URL
+  preset: dataset_slug
+  form_placeholder: eg. my-dataset
+- field_name: notes
+  label: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+- field_name: tag_string
+  label: Tags
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+- field_name: group
+  label: Group
+  form_snippet: group_form.html
+  display_snippet: null
+  #display_snippet: multiple_select.html
+- field_name: schema
+  label: Schema
+  preset: select
+  required: true
+  choices:
+  - value: ""
+    label: 
+      en: Please choose the Schema
+      de: Schema auswählen
+  - value: baug
+    label: BAUG
+  - value: bauj
+    label: BAUJ
+  - value: baut
+    label: BAUT
+  - value: bewa
+    label: BEWA
+  - value: d
+    label: D
+  - value: gsr
+    label: GSR
+  - value: kvr
+    label: KVR
+  - value: kvrbrand
+    label: KVRBRAND
+  - value: mor
+    label: MOR
+  - value: plan
+    label: PLAN
+  - value: rgu
+    label: RGU
+  - value: rku
+    label: RKU
+  - value: scu
+    label: SCU
+  - value: soz
+    label: SOZ
+  - value: vablock
+    label: VABLOCK
+  - value: vaggd
+    label: VAGGD
+  - value: vagrund
+    label: VAGRUND
+  - value: vaortho
+    label: VAORTHO
+  - value: varegio
+    label: VAREGIO
+  - value: va3d
+    label: VA3D
+  - value: wms
+    label: WMS
+- field_name: owner_org
+  label: 
+    en: Responsible organization
+    de: Fachl. Zuständigkeit
+  preset: dataset_organization
+- field_name: author
+  label: 
+    en: Contact person
+    de: Ansprechpartner
+  required: true
+  form_snippet: author.html
+  form_placeholder: Erika Mustermann / KR-GSM-GEO-GIS
+- field_name: author_email
+  label: 
+    en: Contact person Email
+    de: Ansprechpartner E-Mail
+  required: true
+  form_placeholder: erika.mustermann@muenchen.de / gdi@muenchen.de
+  form_snippet: author_email.html
+  display_snippet: email.html
+  validators: not_empty unicode_safe strip_value email_validator
+- field_name: ext_org
+  label: 
+    en: External Ownership
+    de: Externe Datenurheber
+  #preset: markdown
+  required: true
+  form_placeholder: 
+    en: No or Yes; If yes, please name the responsibile organisation, the contact person and an email or telephon number
+    de: Nein oder Ja; Wenn ja. Verantwortlicher
+- field_name: timeliness
+  label: 
+    en: Timeliness
+    de: Update-Zyklus
+  preset: select
+  required: true
+  choices:
+  - value: auf_anforderung
+    label: 
+      en: On demand
+      de: Auf Anforderung
+  - value: monatlich
+    label: 
+      en: Monthly
+      de: Monatlich
+  - value: quartalweise
+    label:
+      en: Quarterly
+      de: Quartalweise
+  - value: jaehrlich
+    label:
+      en: Yearly 
+      de: Jährlich
+  - value: kein
+    label: 
+      en: No update
+      de: Keine Aktualisierung
+#  - value: ""
+#    label: 
+#      en: Please choose the update cycle
+#      de: Update-Zyklus auswählen
+- field_name: geometry_type
+  label: 
+    en: Geometry Type
+    de: Geometrietyp
+  preset: select
+  required: true
+  choices:
+  - value: ""
+    label: 
+      en: Please choose the geometry type
+      de: Geometrietyp auswählen
+  - value: point
+    label: 
+      en: Point
+      de: Punkt
+  - value: line
+    label: 
+      en: Line
+      de: Linie
+  - value: polygon
+    label: 
+      en: Polygon
+      de: Fläche
+  - value: multipatch
+    label: Multipatch
+  - value: raster
+    label: Raster (ArcGIS-Raster)
+  - value: factual_data
+    label: 
+      en: Factual Data
+      de: Sachdaten
+  - value: anno
+    label: ANNO
+- field_name: accuracy
+  label: Genauigkeit 
+    # en: Accuracy
+    # de: Genauigkeit
+  preset: composite
+  #required: true
+  subfields:
+  - field_name: positional_accuracy
+    label: Lagengenauigkeit
+      # en: Positional accuracy
+      # de: Lagengenauigkeit
+    preset: select
+    #required: true
+    choices:
+    - value: ""
+      label: 
+        en: Please choose the accuracy
+        de: Lagengenauigkeit auswählen
+    - value: tachymeter
+      label: Tachymeter (1 cm)
+    - value: diff_gps
+      label: Diff-GPS / SPAOS (3 cm)
+    - value: gps
+      label: GPS (Handy o.ä) (1 m)
+    - value: satellit
+      label: Satellit (1 m)
+    - value: kataster
+      label: Auf Basis Kataster (Flurstücke / Gebäude) (3 cm)      
+    - value: baubloecke
+      label: Auf Basis Baublöcke (30 cm)
+    - value: luftbild
+      label: Auf Basis Luftbild (30 cm)
+    - value: stadtbezirk
+      label: Auf Basis Stadtbezirke (-teil -viertel)(10m)
+    - value: stadtplan
+      label: Auf Basis Stadtplan (10m)
+  - field_name: remark
+    label: Bemerkung
+    #  en: Remark
+    #  de: Bemerkung
+- field_name: archive
+  label: Stadtarchiv 
+    # en: City Archive
+    # de: Stadtarchiv
+  help_text:
+    en: Evaluation through City Archive
+    de: Bewertung durch Stadtarchiv
+  help_inline: true  
+  preset: composite
+  subfields:
+  - field_name: archivability
+    label: Archivwürdigkeit
+      # en: Archivability
+      # de: Archivwürdigkeit
+    form_include_blank_choice: false
+    required: true
+    preset: select
+    choices:
+    - value: noch_offen
+      label: 
+        en: Still open
+        de: noch offen
+    - value: archivwuerdig
+      label: 
+        en: Archivable
+        de: archivwürdig
+    - value: nicht_archivwuerdig
+      label: 
+        en: Not archivable
+        de: nicht archivwürdig
+#    - value: ""
+#      label: 
+#        en: Please choose an option
+#        de: Eine Option auswählen
+  - field_name: justification
+    label: Begründung
+      # en: Justification
+      # de: Begründung
+  # field_name: license_id
+  # label: License
+  # form_snippet: license.html
+  # help_text: License definitions and additional information can be found at http://opendefinition.org/
+- field_name: intranet
+  label: LHM-Intranet
+  preset: composite
+  required: true
+  subfields:
+  - field_name: fachverfahren
+    label: Fachverfahren
+      # en: Specialized Procedures
+      # de: Fachverfahren
+    preset: select
+    required: true
+    form_include_blank_choice: false
+    choices:
+    - value: alle_mit_geoinfoweb
+      label: 
+        en: All access users (incl. GeoInfoWeb)
+        de: alle Zugriffsuser (inkl. GeoInfoWeb)
+    - value: zugriffsuser
+      label: 
+        en: Specific access users
+        de: bestimmte Zugriffsuser
+  - field_name: geoinfoweb
+    label: GeoInfoWeb
+    preset: select
+    required: true
+    form_include_blank_choice: false
+    choices:
+    - value: alle_nutzer
+      label: 
+        en: All users
+        de: alle Nutzer
+    - value: organisationseinheiten
+      label: 
+        en: Specific organizational units
+        de: bestimmte Organisationseinheiten
+    - value: gruppen
+      label: 
+        en: Specific (overarching) group(s)
+        de: bestimmte (übergreifende) Gruppe(n)
+    - value: bezirksausschüsse
+      label: 
+        en: District committees
+        de: ausgenommen Bezirksausschüsse
+- field_name: internet_publish
+  label: 
+    en: 'Internet: Publication / Presentation in the LHM Task area'
+    de: 'Internet: Veröffentlichungen / Präsentationen im Aufgabenbereich der LHM'
+#  form_snippet: multiple_checkbox_lhm.html
+#  display_snippet: multiple_choice.html
+  preset: select
+  required: true
+  choices:
+  - value: 'no'
+    label: 
+      en: 'No'
+      de: Keine
+  - value: presentation
+    label: 
+      en: For presentation purposes (incl. Backend)
+      de: für Präsentationen (inkl. Backend)
+    help_text: 
+      en: e.g. Online Template server
+      de: z. B. Online Formularserver
+  - value: backend
+    label: 
+      en: As the backend data without presentation 
+      de: als Backend-Daten ohne Präsentation
+    help_text: 
+      en: e.g. Geoportal, Munich Maps, Service finde, muenchen.de, App, GeoInfo Online
+      de: z.B. GeoPortal, München maps, Dienstleistungsfinder, muenchen.de, App, GeoInfo Online
+- field_name: datenabgabe_extern_mit_auftrag
+  label:
+    en: Disclosure of data or services to third parties acting on behalf of the City
+    de: Weitergabe von Daten oder Diensten an Dritte, die im Auftrag der Stadt tätig werden 
+  #form_snippet: multiple_checkbox_lhm.html
+  #display_snippet: multiple_choice.html
+  preset: select
+  required: true
+  help_text: 
+    en: 'Declaration of commitment of the third party necessary: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/03_Hinweise%20Datenabgabe%20an%20Dritte%20im%20Auftrag%20der%20Stadt.pdf'
+    de: 'Verpflichtungserklärung des Dritten notwendig: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/03_Hinweise%20Datenabgabe%20an%20Dritte%20im%20Auftrag%20der%20Stadt.pdf'
+  choices:
+  - value: 'yes'
+    label:
+      en: 'Yes'
+      de: Ja
+  - value: 'no'
+    label:
+      en: 'No'
+      de: Nein
+  # - value: rasterdaten
+  #   label: 
+  #     en: Raster data (e.g. MWS, PDF, JPG)
+  #     de: Rasterdaten (z.B. WMS, PDF, JPG)
+  #   help_text: 
+  #     en: i.e. only image - expression and content cannot be changed by user
+  #     de: d.h. nur Bild – Ausprägung und Inhalt kann nicht durch Nutzer geändert werden
+  # - value: vektordaten
+  #   label: 
+  #     en: Vector data (e.g. WFS, SHP, DXF, CSV)
+  #     de: Vektordaten (z.B. WFS, SHP, DXF, CSV)
+  #   help_text: 
+  #     en: i.e. only data - expression, content and analysis by users
+  #     de: d.h. nur Daten – Ausprägung, Inhalt und Analyse durch Nutzer
+- field_name: datenabgabe_extern
+  label: 'Internet: Datenabgabe an externe, die nicht Auftragnehmer sind'
+    # en: 'Internet: Data handover to external non-contractors'
+    # de: 'Internet: Datenabgabe an externe, die nicht Auftragnehmer sind'
+  required: true
+  #preset: composite_lhm
+  #subfields:
+  preset: select
+  choices:
+  - value: 'no'
+    label: 
+      en: 'No'
+      de: Keine
+  - value: in_term_of_use 
+    label:
+      en: Within the scope of the terms of use
+      de: im Rahmen der Nutzungsbedingungen
+    help_text: 
+      en: 'Disclosure of the terms of use for the third party is necessary: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/01_Hinweise%20Weitergabe%20im%20Rahmen%20Nutzungsbedingung.pdf'
+      de: 'Bekanntgabe der Nutzungsbedingungen für den Dritten notwendig: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/01_Hinweise%20Weitergabe%20im%20Rahmen%20Nutzungsbedingung.pdf'
+    # preset: multiple_checkbox
+    # checked: false
+    # choices:
+    # - value: rasterdaten
+    #   label: 
+    #     en: Raster data (e.g. WMS, PDF, JPG)
+    #     de: Rasterdaten (z.B. WMS, PDF, JPG)
+    #   help_text: 
+    #     en: i.e. only image - expression and content cannot be changed by user
+    #     de: d.h. nur Bild – Ausprägung und Inhalt kann nicht durch Nutzer geändert werden
+    # - value: vektordaten
+    #   label: 
+    #     en: Vector data (e.g. WFS, SHP, DXF, CSV)
+    #     de: Vektordaten (z.B. WFS, SHP, DXF, CSV)
+    #   help_text: 
+    #     en: i.e. only data - expression, content and analysis by users
+    #     de: d.h. nur Daten – Ausprägung, Inhalt und Analyse durch Nutzer
+  - value: out_term_of_use 
+    label:
+      en: Beyond the scope of given terms of use
+      de: über den Rahmen der Nutzungsbedingungen hinaus
+    help_text: 
+      en: 'Usage agreement with third parties necessary: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/02_Hinweise%20Weitergabe%20außerhalb%20des%20Rahmens%20Nutzungsbedingung.pdf'
+      de: 'Nutzungsvereinbarung mit Dritten notwendig: http://geo.muenchen.de/metadaten/Nutzungsvereinbarung/Nutzungsvereinbarungen_GSM/02_Hinweise%20Weitergabe%20außerhalb%20des%20Rahmens%20Nutzungsbedingung.pdf'
+    # preset: multiple_checkbox
+    # checked: false
+    # choices:
+    # - value: rasterdaten
+    #   label: 
+    #     en: Raster data (e.g. WMS, PDF, JPG)
+    #     de: Rasterdaten (z.B. WMS, PDF, JPG)
+    #   help_text: 
+    #     en: i.e. only image - expression and content cannot be changed by user
+    #     de: d.h. nur Bild – Ausprägung und Inhalt kann nicht durch Nutzer geändert werden
+    # - value: vektordaten
+    #   label: 
+    #     en: Vector data (e.g. WFS, SHP, DXF, CSV)
+    #     de: Vektordaten (z.B. WFS, SHP, DXF, CSV)
+    #   help_text: 
+    #     en: i.e. only data - expression, content and analysis by users
+    #     de: d.h. nur Daten – Ausprägung, Inhalt und Analyse durch Nutzer
+- field_name: open_data
+  label: Open Data 
+  preset: select
+  help_text: 
+    en: 'Rights of use open data: https://www.opengov-muenchen.de/pages/nutzungsbedingungen'
+    de: 'Nutzungsrechte open data: https://www.opengov-muenchen.de/pages/nutzungsbedingungen'
+  required: true
+  choices:
+  - value: 'no'
+    label: 
+      en: 'No'
+      de: Nein
+  - value: limited_open
+    label: 
+      en: Only certain attributes and contents can be used
+      de: nur bestimmte Attribute und Inhalte nutzbar
+  - value: all_open
+    label: 
+      en: All attributes and contents usable
+      de: alle Attribute und Inhalte nutzbar
+- field_name: additional_usage_notes
+  label: weitere Hinweise zur Nutzung
+    # en: Additional hints regarding the resource/data useage
+    # de: weitere Hinweise zur Nutzung
+  repeating_label: Hinweis
+  repeating_subfields:
+  - field_name: usage_keywords
+    label: Stichwort
+      # en: Keywords
+      # de: Stichwort
+    form_placeholder: z.b. Wirtschaft, geistige Gesundheit, Regierung
+  - field_name: usage_remarks
+    label: Hinweise
+      # en: Remarks
+      # de: Hinweise
+    preset: markdown
+    form_placeholder: Erläutern Sie die zusätzlichen Verwendungsbedingungen, die nicht unter die obigen Punkte fallen.
+- field_name: change_history
+  label: 
+    en: Change history
+    de: Änderungshistorie
+  form_snippet: repeating_subfields_lhm.html
+  repeating_subfields:
+  - field_name: change
+    label: 
+      en: Changed Items
+      de: Änderung
+    preset: markdown
+    form_placeholder: 
+      en: What has been changed since last update?
+      de: Was hat sich seit der letzten Aktualisierung geändert?
+  - field_name: editor
+    label: 
+      en: Editor
+      de: Geändert von
+    form_snippet: editor.html
+    form_placeholder: Erika Mustermann, erika.musstermann@muenchen.de
+  - field_name: changed_date
+    label: 
+      en: Changed date
+      de: Geändert am
+    form_snippet: date_lhm.html
+    validators: scheming_required isodate convert_to_json_if_date
+- field_name: spatial-reference-system
+  label: spatial-reference-system
+
+resource_fields:
+- field_name: url
+  label: URL
+  preset: resource_url_upload
+- field_name: name
+  label: Name
+  form_placeholder: 
+    en: e.g. January 2011 Gold Prices
+    de: z. B. 3D Stadtmodell
+- field_name: description
+  label: Description
+  form_snippet: markdown.html
+  form_placeholder: Some useful notes about the data
+- field_name: format
+  label: Format
+  preset: resource_format_autocomplete
