@@ -1,9 +1,11 @@
 import ckan.plugins as p
 from ckanext.spatial.interfaces import ISpatialHarvester
+import ckanext.spatial.harvesters.base as base
+import ckan.plugins.toolkit as toolkit
 import os
 from lxml import etree
 import json
-import ckanext.spatial.harvesters.base as base
+
 
 class LHM_GP_Harvester(p.SingletonPlugin):
 
