@@ -106,11 +106,11 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             
 
         # Mapping organisations
-        filepath_ckan = toolkit.config.get("ckanext.iso.init_data", "mapping_orgas.json")
-        print('filepath_ckan')
-        print(filepath_ckan)
+        filepath = toolkit.config.get("ckanext.iso.mapping_orgas")
+        print('filepath')
+        print(filepath)
         # (above an example implementation from ckanext-lhm, do similar for ckanext-iso)
-        filepath = '/srv/app/src/ckanext-iso/ckanext/iso/mapping_orgas.json'
+        #filepath = '/srv/app/src/ckanext-iso/ckanext/iso/mapping_orgas.json'
         f = open(filepath)
         data = json.load(f)
         for orga, iso_orgas in data.items():
