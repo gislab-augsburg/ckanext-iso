@@ -33,8 +33,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
 
         # Check Harvest Source Configuration:
-        # e.g.: {"default_extras": {"target_dataset_type":"isodata"}}
-        # dataset type must be specified in active ckan schema
+        '''
+        e.g.: {"default_extras": {"target_dataset_type":"isodata"}}
+        dataset type must be specified in active ckan schema
+        '''
         for item in package_dict['extras']:
             if item['key'] == 'target_dataset_type':
                 target_dataset_type = item['value']
@@ -57,10 +59,12 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             package_dict['metadata-standard-name'] = iso_values['metadata-standard-name']
             package_dict['metadata-standard-version'] = iso_values['metadata-standard-version']
             # Example package_dict extras:
-            # Schema field name and extras field name cannot be the same,
-            # raises Validation Error: {'Extras': 'There is a schema field with the same name'}.
-            # Solution 2: Delete extras element after assigning as package-dict first level element,
-            # get values from package_dict extras:
+            '''
+            Schema field name and extras field name cannot be the same,
+            raises Validation Error: {'Extras': 'There is a schema field with the same name'}.
+            Solution 2: Delete extras element after assigning as package-dict first level element,
+            get values from package_dict extras:
+            '''
             for item in package_dict['extras']:
                 if item['key'] == 'spatial-reference-system':
                     package_dict['spatial-reference-system'] = item['value']
@@ -92,10 +96,12 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             package_dict['datenabgabe_extern'] = 'no'
             package_dict['open_data'] = 'all_open'
             # Example package_dict extras:
-            # Schema field name and extras field name cannot be the same,
-            # raises Validation Error: {'Extras': 'There is a schema field with the same name'}.
-            # Solution 2: Delete extras element after assigning as package-dict first level element,
-            # get values from iso_values:
+            '''
+            Schema field name and extras field name cannot be the same,
+            raises Validation Error: {'Extras': 'There is a schema field with the same name'}.
+            Solution 2: Delete extras element after assigning as package-dict first level element,
+            get values from iso_values:
+            '''
             package_dict['spatial-reference-system'] = iso_values['spatial-reference-system']
             package_dict['guid'] = iso_values['guid']
             for item in package_dict['extras']:
@@ -106,10 +112,12 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             
 
         # Mapping organisations
+        '''
+        # Example implementation for defining mapping_orgas path in ckan .ini file:
         filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
         print('filepath_config')
         print(filepath_config)
-        # (above an example implementation from ckanext-lhm, do similar for ckanext-iso)
+        '''
         filepath = '/srv/app/src/ckanext-iso/ckanext/iso/mapping_orgas.json'
         f = open(filepath)
         data = json.load(f)
@@ -138,9 +146,17 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         f.write(data)
         f.close()
 
-        # Set force_import in base.py import_stage if specified in harvest source config like
-        # {"default_extras": {"target_dataset_type":"isodata", "force_import":"true"}}
-        # and if status is 'change' (update)
+        '''
+        Set force_import in base.py import_stage if specified in harvest source config like
+        {"default_extras": {"target_dataset_type":"isodata", "force_import":"true"}}
+        and if status is 'change' (update)
+        For development only! Updates will be made any time even if metadata_modified_date
+        on csw-server is not more recent then metadata_modified_date of previous object.
+        Caution: Previous harvesting objects and others will not be set to current = false,
+        so 'ckan harvester source clear-history <source id> -k true' will not work.
+        To make it work, do before in pgAdmin:
+        UPDATE public.harvest_object SET current = 'false' WHERE harvest_job_id = '<job id>';
+        '''
         status = _get_object_extra(harvest_object, 'status')
         for item in package_dict['extras']:
             if item['key'] == 'force_import':
