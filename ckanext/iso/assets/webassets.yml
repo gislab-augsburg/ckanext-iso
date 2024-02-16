@@ -1,14 +1,14 @@
-# glab-js:
+# iso-js:
 #   filter: rjsmin
-#   output: ckanext-glab/%(version)s-glab.js
+#   output: ckanext-iso/%(version)s-iso.js
 #   contents:
-#     - js/glab.js
+#     - js/iso.js
 #   extra:
 #     preload:
 #       - base/main
 
-# glab-css:
+# iso-css:
 #   filter: cssrewrite
-#   output: ckanext-glab/%(version)s-glab.css
+#   output: ckanext-iso/%(version)s-iso.css
 #   contents:
-#     - css/glab.css
+#     - css/iso.css
