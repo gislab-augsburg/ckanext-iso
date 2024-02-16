@@ -118,7 +118,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         print('filepath_config')
         print(filepath_config)
         '''
-        filepath = '/srv/app/src/ckanext-iso/ckanext/iso/mapping_orgas.json'
+        filepath = '/usr/local/lib/python3.8/dist-packages/ckanext/iso/mapping_orgas.json'
         f = open(filepath)
         data = json.load(f)
         for orga, iso_orgas in data.items():
