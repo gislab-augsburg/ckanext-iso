@@ -117,9 +117,11 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
         print('filepath_config')
         print(filepath_config)
-        '''
+        # Example implementation with hardcoded path value:
         filepath = '/usr/local/lib/python3.8/dist-packages/ckanext/iso/mapping_orgas.json'
-        f = open(filepath)
+        '''
+        filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
+        f = open(filepath_config)
         data = json.load(f)
         for orga, iso_orgas in data.items():
             if iso_values['responsible-organisation'][0]['individual-name'] in iso_orgas:
