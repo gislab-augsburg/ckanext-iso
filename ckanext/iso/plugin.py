@@ -171,6 +171,49 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         return package_dict
 
 
+    # Validation
+
+    def get_validators(self):
+        '''
+        Allows to register custom Validators that can be applied to harvested
+        metadata documents.
+
+        Validators are classes that implement the ``is_valid`` method. Check
+        the `Writing custom validators`_ section in the docs to know more
+        about writing custom validators.
+
+        :returns: A list of Validator classes
+        :rtype: list
+        '''
+        return []
+
+        class TestValidator(BaseValidator):
+
+            name = 'testval'
+            title = 'Minimal Test Validation'
+
+            _elements = [
+                ('Identification Citation Title', '/metadata/idinfo/citation/citeinfo/title'),
+                ('Identification Citation Originator', '/metadata/idinfo/citation/citeinfo/origin'),
+                ('Identification Citation Publication Date', '/metadata/idinfo/citation/citeinfo/pubdate'),
+                ('Identification Description Abstract', '/metadata/idinfo/descript/abstract')
+                ]
+
+            @classmethod
+            def is_valid(cls, xml):
+
+                errors = []
+
+                for title, xpath in cls._elements:
+                    element = xml.xpath(xpath)
+                    if len(element) == 0 or not element[0].text:
+                        errors.append(('Element not found: {0}'.format(title), None))
+                if len(errors):
+                    return False, errors
+
+                return True, []
+
+
 # Helper Functions
 
 def _get_object_extra(harvest_object, key):
