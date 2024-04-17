@@ -197,10 +197,13 @@ class TestValidator(BaseValidator):
     title = 'Minimal Test Validation'
 
     _elements = [
-        ('Identification Citation Title', '/metadata/idinfo/citation/citeinfo/title'),
-        ('Identification Citation Originator', '/metadata/idinfo/citation/citeinfo/origin'),
-        ('Identification Citation Publication Date', '/metadata/idinfo/citation/citeinfo/pubdate'),
-        ('Identification Description Abstract', '/metadata/idinfo/descript/abstract')
+        ('File Identifier', '/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString'),
+        ('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel',
+        ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
+        ]
+
+    _check_name = [
+        ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
 
     @classmethod
@@ -212,6 +215,12 @@ class TestValidator(BaseValidator):
             element = xml.xpath(xpath)
             if len(element) == 0 or not element[0].text:
                 errors.append(('Element not found: {0}'.format(title), None))
+            if element[2] != 'XYZ':
+                errors.append(('Organisation Name is not XYZ not found: {0}'.format(title), None))
+        for title, xpath in cls._check_name:
+            element = xml.xpath(xpath)
+            if element != 'XYZ':
+                errors.append((f'Organisation Name is not XYZ, it is {element}'.format(title), None))
         if len(errors):
             return False, errors
 
