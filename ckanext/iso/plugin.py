@@ -206,21 +206,22 @@ class TestValidator(BaseValidator):
         ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
 
+
     @classmethod
     def is_valid(cls, xml):
 
         errors = []
 
         for title, xpath in cls._elements:
-            element = xml.xpath(xpath)
+            element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
             if len(element) == 0 or not element[0].text:
                 errors.append(('Element not found: {0}'.format(title), None))
-            if element[2] != 'XYZ':
-                errors.append(('Organisation Name is not XYZ not found: {0}'.format(title), None))
+            else:
+                print(f'Dataset passed validation for {title}, value is {element[0].text}')
         for title, xpath in cls._check_name:
-            element = xml.xpath(xpath)
+            element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
             if element != 'XYZ':
-                errors.append((f'Organisation Name is not XYZ, it is {element}'.format(title), None))
+                errors.append(('Orga name is not XYZ, it is {0}'.format(element[0].text), None))
         if len(errors):
             return False, errors
 
