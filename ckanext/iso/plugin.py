@@ -198,7 +198,7 @@ class TestValidator(BaseValidator):
 
     _elements = [
         ('File Identifier', '/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString'),
-        ('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel',
+        ('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel'),
         ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
 
