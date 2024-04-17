@@ -1,5 +1,6 @@
 import ckan.plugins as p
 from ckanext.spatial.interfaces import ISpatialHarvester
+from ckanext.spatial.validation.validation import BaseValidator
 import ckanext.spatial.harvesters.base as base
 import ckan.plugins.toolkit as toolkit
 import os
@@ -171,7 +172,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         return package_dict
 
 
-    # Validation
+    # Register custom validator
 
     def get_validators(self):
         '''
@@ -185,33 +186,36 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         :returns: A list of Validator classes
         :rtype: list
         '''
-        return []
+        return [TestValidator]
 
-        class TestValidator(BaseValidator):
 
-            name = 'testval'
-            title = 'Minimal Test Validation'
+# Cutom validator 
 
-            _elements = [
-                ('Identification Citation Title', '/metadata/idinfo/citation/citeinfo/title'),
-                ('Identification Citation Originator', '/metadata/idinfo/citation/citeinfo/origin'),
-                ('Identification Citation Publication Date', '/metadata/idinfo/citation/citeinfo/pubdate'),
-                ('Identification Description Abstract', '/metadata/idinfo/descript/abstract')
-                ]
+class TestValidator(BaseValidator):
 
-            @classmethod
-            def is_valid(cls, xml):
+    name = 'testval'
+    title = 'Minimal Test Validation'
 
-                errors = []
+    _elements = [
+        ('Identification Citation Title', '/metadata/idinfo/citation/citeinfo/title'),
+        ('Identification Citation Originator', '/metadata/idinfo/citation/citeinfo/origin'),
+        ('Identification Citation Publication Date', '/metadata/idinfo/citation/citeinfo/pubdate'),
+        ('Identification Description Abstract', '/metadata/idinfo/descript/abstract')
+        ]
 
-                for title, xpath in cls._elements:
-                    element = xml.xpath(xpath)
-                    if len(element) == 0 or not element[0].text:
-                        errors.append(('Element not found: {0}'.format(title), None))
-                if len(errors):
-                    return False, errors
+    @classmethod
+    def is_valid(cls, xml):
 
-                return True, []
+        errors = []
+
+        for title, xpath in cls._elements:
+            element = xml.xpath(xpath)
+            if len(element) == 0 or not element[0].text:
+                errors.append(('Element not found: {0}'.format(title), None))
+        if len(errors):
+            return False, errors
+
+        return True, []
 
 
 # Helper Functions
