@@ -29,11 +29,11 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         path_csw = path_volume + '/csw'
         path_json = path_csw + '/json'
         path_xml = path_csw + '/xml'
-        if os.exists(path_csw) == False:
+        if os.path.exists(path_csw) == False:
             os.mkdir(path_csw)
-        if os.exists(path_json) == False:
+        if os.path.exists(path_json) == False:
             os.mkdir(path_json)
-        if os.exists(path_xml) == False:
+        if os.path.exists(path_xml) == False:
             os.mkdir(path_xml)
         path_json = f'{path_json}/{guid}'
         path_xml = f'{path_xml}/{guid}'
