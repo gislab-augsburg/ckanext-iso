@@ -22,13 +22,27 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
         # Write files for Schema Mapping I
         guid = iso_values['guid']
-        path = f'/srv/app/data/{guid}'
-        #os.mkdir(path)
+        
+        # Define and create directories for saving harvested data in xml and json format
+        # To Do: make path_volume configurable:
+        path_volume = '/var/lib/ckan'
+        path_csw = path_volume + '/csw'
+        path_json = path_csw + '/json'
+        path_xml = path_csw + '/xml'
+        if os.exists(path_csw) == False:
+            os.mkdir(path_csw)
+        if os.exists(path_json) == False:
+            os.mkdir(path_json)
+        if os.exists(path_xml) == False:
+            os.mkdir(path_xml)
+        path_json = f'{path_json}/{guid}'
+        path_xml = f'{path_xml}/{guid}'
+        
         for key in package_dict:
             if type(package_dict[key]) == bytes:
                 package_dict[key] = package_dict[key].decode('utf-8')
         data = json.dumps(package_dict, indent=4)
-        f = open(f'{path}-package_dict_pre.json', 'w')
+        f = open(f'{path_json}-package_dict_pre.json', 'w')
         f.write(data)
         f.close()
 
@@ -131,13 +145,13 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
         # Write files for Schema Mapping II
         tree = etree.ElementTree(xml_tree)
-        tree.write(f'{path}-iso_tree.xml')
+        tree.write(f'{path_xml}-iso_tree.xml')
 
         for key in iso_values:
             if type(iso_values[key]) == bytes:
                 iso_values[key] = iso_values[key].decode('utf-8')
         data = json.dumps(iso_values, indent=4)
-        f = open(f'{path}-iso_values.json', 'w')
+        f = open(f'{path_json}-iso_values.json', 'w')
         f.write(data)
         f.close()
 
@@ -145,7 +159,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             if type(package_dict[key]) == bytes:
                 package_dict[key] = package_dict[key].decode('utf-8')
         data = json.dumps(package_dict, indent=4)
-        f = open(f'{path}-package_dict_post.json', 'w')
+        f = open(f'{path_json}-package_dict_post.json', 'w')
         f.write(data)
         f.close()
 
