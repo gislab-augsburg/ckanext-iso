@@ -1,0 +1,730 @@
+scheming_version: 2
+dataset_type: geoportal
+about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
+about_url: http://github.com/ckan/ckanext-scheming
+
+dataset_fields:
+
+# Feld GP
+- field_name: abteilung_unterabteilung
+  label: Abteilung / Unterabteilung
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld Master
+- field_name: title
+  label: Title
+  preset: title
+  form_snippet: large_text_lhm.html
+  form_placeholder: Thema | NAME_DER_TABELLE
+  is_info: true
+  info_text: 'Thema | NAME_DER_TABELLE. Der Titel beteht aus dem Thema (für Geodatenpool: ehemals Datenbestand) und dem Namen der Tabelle in der Datenbank.'
+  required: true
+
+# Feld Master
+- field_name: notes
+  label: Description
+  form_snippet: markdown_lhm.html
+  form_placeholder: eg. Some useful notes about the data
+  is_info: true
+  info_text: Klare und prägnante Beschreibung des Datensatzes, damit auch Laien den Inhalt verstehen und einschätzen können. Dazu können neben dem konkreten Inhalt z.B. die räumliche Abdeckung, Vollständigkeit, Urheberschaft und Aktualität gehören.
+  required: true
+
+# Feld Master
+- field_name: tag_string
+  label: Schlagworte
+  preset: tag_string_autocomplete
+  form_snippet: text_lhm.html
+  form_placeholder: z.B. Gesundheit; Umwelt;
+  is_info: true
+  info_text: Schlagworte sind i.d.R. Substantive zur inhaltlichen Beschreibung des Datensatzes. Es können mehrere Schlagworte vergeben werden. 
+
+# Feld GP
+- field_name: ident_topic
+  label: Thematik
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: farming
+  - value: biota
+  - value: boundaries
+  - value: climatologyMeteorologyAtmosphere
+  - value: economy
+  - value: elevation
+  - value: environment
+  - value: geoscientificInformation
+  - value: health
+  - value: imageryBaseMapsEarthCover
+  - value: intelligenceMilitary
+  - value: inlandWaters
+  - value: location
+  - value: oceans
+  - value: planningCadastre
+  - value: society
+  - value: structure
+  - value: transportation
+  - value: utilitiesCommunication
+
+# Feld GP
+- field_name: ident_datetype
+  label: Datumsart
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: creation
+    label: Erstellung
+  - value: publication
+    label: Publikation
+  - value: revision
+    label: Revision
+
+# Feld GP
+- field_name: ident_date
+  label: Datum
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_maintenancefrequency
+  label: Aktualisierungsintervall
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: continual
+  - value: daily
+  - value: weekly
+  - value: fortnightly
+  - value: monthly
+  - value: quarterly
+  - value: biannually
+  - value: annually
+  - value: asNeeded
+  - value: irregular
+  - value: notPlanned
+  - value: unknown
+
+# Feld GP
+- field_name: ident_organisation
+  label: Vertrieb Organisation
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_deliverypoint
+  label: Vertrieb Straße
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_city
+  label: Vertrieb Stadt
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_administrativearea
+  label: Vertrieb Bundesland
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_postalcode
+  label: Vertrieb Postleitzahl
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_country
+  label: Vertrieb Land
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP, multiple?
+- field_name: ident_voice
+  label: Vertrieb Telefon
+  #preset: multiple_text
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_facsimile
+  label: Vertrieb Fax
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_email
+  label: Vertrieb E-Mail
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_online
+  label: Vertrieb Homepage
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_role
+  label: Vertrieb Funktion
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: resourceProvider
+  - value: custodian
+  - value: owner
+  - value: user
+  - value: distributor
+  - value: originator
+  - value: pointOfContact
+  - value: principalInvestigator
+  - value: processor
+  - value: publisher
+  - value: author
+
+# Feld GP
+- field_name: ident_classification
+  label: Anwendungsbeschränkungen
+  preset: multiple_select
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: unclassified
+  - value: restricted
+  - value: confidential
+  - value: secret
+  - value: topSecret
+
+# Feld GP
+- field_name: ident_accessconstraints
+  label: Zugriffsbeschränkungen
+  preset: multiple_select
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: copyright
+  - value: patent
+  - value: patentPending
+  - value: trademark
+  - value: license
+  - value: intellectualPropertyRights
+  - value: restricted
+  - value: otherRestrictions
+
+# Feld GP
+- field_name: ident_uselimitation
+  label: Nutzungsbeschränkungen
+  preset: multiple_text
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_otherconstraints
+  label: Sonstige Beschränkungen
+  preset: multiple_text
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_useconstraints
+  label: Sonstige Nutzungsbeschränkungen
+  preset: multiple_select
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: copyright
+  - value: patent
+  - value: patentPending
+  - value: trademark
+  - value: license
+  - value: intellectualPropertyRights
+  - value: restricted
+  - value: otherRestrictions
+  
+# Feld GP
+- field_name: distrib_organisation
+  label: Metadaten Organisation
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_individual
+  label: Metadaten Ansprechpartner
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_position
+  label: Metadaten Position
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_voice
+  label: Metadaten Telefon
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_facsimile
+  label: Metadaten Fax
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_email
+  label: Metadaten E-Mail
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_online
+  label: Metadaten Homepage
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: distrib_role
+  label: Metadaten Funktion
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: resourceProvider
+  - value: custodian
+  - value: owner
+  - value: user
+  - value: distributor
+  - value: originator
+  - value: pointOfContact
+  - value: principalInvestigator
+  - value: processor
+  - value: publisher
+  - value: author  
+
+# Feld GP
+- field_name: dataquality_scopedescription_dataset
+  label: Datenqualität Datensatz
+  preset: multiple_text
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: dataquality_scopedescription_other
+  label: Datenqualität andere
+  preset: multiple_text
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: ident_alternatetitle
+  label: Datenbeschreibung
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP, no values, no codelist ??
+- field_name: quantitativeresult
+  label: Datenergebnis (quantitativ)
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: 1
+  - value: 2
+  - value: 3
+
+# Feld GP
+- field_name: refsystem
+  label: Koordinatensystem Label
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  form_snippet: repeating_subfields_lhm.html
+  repeating_label: Koordinatensystem Repeating-Label
+  repeating_subfields:
+  - field_name: refsystem_code
+    label: Koordinatensystem-Identifikator
+    #form_placeholder: z.b. EPSG:4326
+  - field_name: refsystem_codespace
+    label: Koordinatensystem-Codespace
+    #form_placeholder: z.B. xyz
+  - field_name: refsystem_version
+    label: Koordinatensystem-Version
+    #form_placeholder: z.B. xyz
+
+# Feld GP
+- field_name: contact_organisation
+  label: Daten Organisation
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_individual
+  label: Daten Ansprechpartner
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_deliverypoint
+  label: Daten Straße
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_city
+  label: Daten Stadt
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_administrativearea
+  label: Daten Bundesland
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_postalcode
+  label: Daten Postleitzahl
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_country
+  label: Daten Land
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_voice
+  label: Daten Telefon
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_facsimile
+  label: Daten Fax
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_email
+  label: Daten E-Mail
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_online
+  label: Daten Homepage
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: contact_role
+  label: Daten Funktion
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: resourceProvider
+  - value: custodian
+  - value: owner
+  - value: user
+  - value: distributor
+  - value: originator
+  - value: pointOfContact
+  - value: principalInvestigator
+  - value: processor
+  - value: publisher
+  - value: author 
+
+# Feld GP
+- field_name: dataquality_scopecode
+  label: Datentyp
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: attribute
+  - value: attributeType
+  - value: collectionHardware
+  - value: collectionSession
+  - value: dataset
+  - value: series
+  - value: nonGeographicDataset
+  - value: dimensionGroup
+  - value: feature
+  - value: featureType
+  - value: propertyType
+  - value: fieldSession
+  - value: software
+  - value: service
+  - value: model
+  - value: tile
+
+# Feld GP
+- field_name: distrib_format
+  label: Diensteart und Version Label
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  form_snippet: repeating_subfields_lhm.html
+  repeating_label: Diensteart und Version Repeating-Label
+  repeating_subfields:
+  - field_name: distrib_format_name
+    label: Diensteart
+    #form_placeholder: z.b. EPSG:4326
+  - field_name: distrib_format_version
+    label: Version
+    #form_placeholder: z.B. xyz
+
+# Feld GP
+- field_name: ident_identifier
+  label: Metadaten-Identifikator
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld Master
+- field_name: owner_org
+  label: 
+    en: Responsible organization
+    de: Organisation
+  preset: dataset_organization
+  form_snippet: organization_lhm.html
+  is_info: true
+  info_text_orga: Angabe des fachlich zuständigen Referats und der ersten, das Referat untergliedernden Organisationseinheit (z.B. Amt, Hauptabteilung, Geschäftsbereich)
+  required: true
+
+# Feld GP
+- field_name: iso_type
+  label: ISO-Typ
+  preset: select_lhm
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+  choices:
+  - value: SV_ServiceIdentification
+  - value: MD_DataIdentification
+
+# Feld GP
+- field_name: iso_standard
+  label: ISO-Standard
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld GP
+- field_name: iso_version
+  label: ISO-Version
+  form_snippet: text_lhm.html
+  # required: true
+  is_info: true
+  info_text: Geoportal Abteilung / Unterabteilung
+
+# Feld Master
+- field_name: name
+  label: URL
+  preset: dataset_slug
+  form_placeholder: eg. my-dataset
+
+
+# Beispielfelder isodata
+
+# - field_name: harvest_source 
+#   label: harvest_source 
+
+#- field_name: guid
+#  label: GUID
+
+# - field_name: metadata-language
+#   label: metadata-language
+
+# - field_name: metadata-date
+#   label: metadata-date
+
+# - field_name: metadata-standard-name
+#   label: metadata-standard-name
+
+# - field_name: metadata-standard-version
+#   label: metadata-standard-version
+
+# - field_name: resource-type
+#   label: resource-type
+
+#  #- field_name: metadata-point-of-contact
+#  #  label: metadata-point-of-contact
+
+# - field_name: contact-email
+#   label: contact-email
+
+# - field_name: spatial-data-service-type
+#   label: spatial-data-service-type
+
+# - field_name: progress
+#   label: progress
+
+#  #- field_name: access_constraints
+#  #  label: access_constraints
+ 
+#  #- field_name: responsible-party
+#  #  label: responsible-party
+
+#- field_name: spatial-reference-system
+#  label: spatial-reference-system
+
+#- field_name: spatial
+#  label: spatial
+
+# - field_name: lineage
+#   label: lineage
+
+
+resource_fields:
+
+# Feld Master
+- field_name: url
+  label: URL
+  preset: resource_url_upload
+
+# Feld Master
+- field_name: name
+  label: Name
+  form_snippet: text_lhm.html
+  is_info: true
+  info_text: Tabellenname in der Datenbank
+  #validators: scheming_required
+  required: true
+
+# Feld Master
+- field_name: description
+  label: Beschreibung
+  form_snippet: markdown_lhm.html
+  is_info: true
+  info_text: Beschreibung der Ressource, z.B. 'Tabelle im stadtweit verfügbaren Geodatenpool'. Kann auch Verwendungszweck /-möglichkeiten der Ressource enthalten.
+  #validators: scheming_required
+  required: true
+
+# Feld Master
+- field_name: format
+  label: Format
+  preset: select_lhm
+  is_info: true
+  info_text: Dateiformat der Ressource
+  #validators: scheming_required
+  required: true 
+  choices:
+  - value: oracle-db
+    label: Oracle-DB
+  - value: XLSX
+    label: XLSX
+  - value: PDF
+    label: PDF
+  - value: WCS
+    label: WCS
+  - value: WFS
+    label: WFS
+  - value: WMS
+    label: WMS
+  - value: WMTS
+    label: WMTS
+  - value: JSON
+    label: JSON
+  - value: XML/GML
+    label: XML/GML
+  - value: ArcGIS Kartenservice
+    label: ArcGIS Kartenservice
+  - value: URL
+    label: URL
+  - value: Link
+    label: Link
+
+#- field_name: format
+#  label: Format
+#  preset: resource_format_autocomplete
+#
+#- field_name: resource_locator_function
+#  label: resource_locator_function
+#
+#- field_name: resource_locator_protocol
+#  label: resource_locator_protocol

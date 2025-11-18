@@ -94,6 +94,263 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                     i = package_dict['extras'].index(item)
                     del package_dict['extras'][i]
 
+
+        # Map Iso-Values and XML-Tree to LHM Geoportal-Schema (geoportal_dataset.yaml)
+        if target_dataset_type == 'geoportal':
+
+            # Define xml-paths for attributes not included in Iso Values
+            tree = etree.ElementTree(xml_tree)
+            root = tree.getroot()
+            
+            # Define namespaces
+            gmd = "{http://www.isotc211.org/2005/gmd}"
+            gco = "{http://www.isotc211.org/2005/gco}"
+            srv = "{http://www.isotc211.org/2005/srv}"
+            
+            # Abbreviations
+            service_ident = f'./{gmd}identificationInfo/{srv}SV_ServiceIdentification'
+            data_ident = f'./{gmd}identificationInfo/{gmd}MD_DataIdentification'
+            respons_party = f'{gmd}pointOfContact/{gmd}CI_ResponsibleParty'
+            adress = f'{gmd}contactInfo/{gmd}CI_Contact/{gmd}address/{gmd}CI_Address'
+            phone = f'{gmd}contactInfo/{gmd}CI_Contact/{gmd}phone/{gmd}CI_Telephone'
+            online = f'{gmd}contactInfo/{gmd}CI_Contact/{gmd}onlineResource/{gmd}CI_OnlineResource'
+            legal = f'{gmd}resourceConstraints/{gmd}MD_LegalConstraints'
+            security = f'{gmd}resourceConstraints/{gmd}MD_SecurityConstraints'
+            distributor = f'./{gmd}distributionInfo/{gmd}MD_Distribution/{gmd}distributor/{gmd}MD_Distributor'
+            distrib_party = f'{gmd}distributorContact/{gmd}CI_ResponsibleParty'
+            contact = f'./{gmd}contact/{gmd}CI_ResponsibleParty'
+            data_quality = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality'
+            
+            # Needed paths
+            ident_deliverypoint = f'{service_ident}/{respons_party}/{adress}/{gmd}deliveryPoint/{gco}CharacterString'
+            ident_city = f'{service_ident}/{respons_party}/{adress}/{gmd}city/{gco}CharacterString'
+            ident_administrativearea = f'{service_ident}/{respons_party}/{adress}/{gmd}administrativeArea/{gco}CharacterString'
+            ident_postalcode = f'{service_ident}/{respons_party}/{adress}/{gmd}postalCode/{gco}CharacterString'
+            ident_country = f'{service_ident}/{respons_party}/{adress}/{gmd}country/{gco}CharacterString'
+            ident_voice = f'{service_ident}/{respons_party}/{phone}/{gmd}voice/{gco}CharacterString'
+            ident_facsimile = f'{service_ident}/{respons_party}/{phone}/{gmd}facsimile/{gco}CharacterString'
+            ident_classification = f'{service_ident}/{security}/{gmd}classification/{gmd}MD_ClassificationCode'
+            ident_uselimitation = f'{service_ident}/{legal}/{gmd}useLimitation/{gco}CharacterString'
+            ident_useconstraints = f'{service_ident}/{legal}/{gmd}useConstraints/{gmd}MD_RestrictionCode'
+            distrib_voice = f'{distributor}/{distrib_party}/{phone}/{gmd}voice/{gco}CharacterString'
+            distrib_facsimile = f'{distributor}/{distrib_party}/{phone}/{gmd}facsimile/{gco}CharacterString'
+            dataquality_scopedescription_dataset = f'{data_quality}/{gmd}scope/{gmd}DQ_Scope/{gmd}levelDescription/{gmd}MD_ScopeDescription/{gmd}dataset/{gco}CharacterString'
+            dataquality_scopedescription_other = f'{data_quality}/{gmd}scope/{gmd}DQ_Scope/{gmd}levelDescription/{gmd}MD_ScopeDescription/{gmd}other/{gco}CharacterString'
+            quantitativeresult = f'{data_quality}/{gmd}report/{gmd}DQ_QuantitativeAttributeAccuracy/{gmd}result/{gmd}DQ_QuantitativeResult/{gmd}value/{gco}Record/{gco}Integer'
+            refsystem_code = f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}code/{gco}CharacterString'
+            refsystem_codespace =f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}codeSpace/{gco}CharacterString'
+            refsystem_version = f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}version/{gco}CharacterString'
+            contact_deliverypoint = f'{contact}/{adress}/{gmd}deliveryPoint/{gco}CharacterString'
+            contact_city = f'{contact}/{adress}/{gmd}city/{gco}CharacterString'
+            contact_administrativearea = f'{contact}/{adress}/{gmd}administrativeArea/{gco}CharacterString'
+            contact_postalcode = f'{contact}/{adress}/{gmd}postalCode/{gco}CharacterString'
+            contact_country = f'{contact}/{adress}/{gmd}country/{gco}CharacterString'
+            contact_voice = f'{contact}/{phone}/{gmd}voice/{gco}CharacterString'
+            contact_facsimile = f'{contact}/{phone}/{gmd}facsimile/{gco}CharacterString'
+            dataquality_scopecode = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality/{gmd}scope/{gmd}DQ_Scope/{gmd}level/{gmd}MD_ScopeCode'
+            ident_identifier = f'{service_ident}/{gmd}citation/{gmd}CI_Citation/{gmd}identifier/{gmd}MD_Identifier/{gmd}code/{gco}CharacterString'
+
+            # Get iso_type
+            if len(root.findall(f".//{gmd}MD_DataIdentification")) == 1:
+                package_dict['iso_type'] = 'MD_DataIdentification'
+                print('---------------- WORKING dataset ---------------')
+            else:
+                if len(root.findall(f".//{srv}SV_ServiceIdentification")) == 1:
+                    package_dict['iso_type'] = 'SV_ServiceIdentification'
+                    print('---------------- WORKING Service ---------------')
+
+            # Replace if iso_type is data
+            if service_ident in xml_path:
+                if package_dict['iso_type'] == 'MD_DataIdentification':
+                    xml_path = xml_path.replace(service_ident, data_ident)
+
+            # Define List for attributes that need to be xtracted from xml-tree
+            xml_paths = []
+            xml_names = []
+            
+
+            # Define LHM Geoportal-Schema fields
+
+            package_dict['ident_inividual'] = iso_values["metadata-point-of-contact"][0]["individual-name"] 
+            #title                      Done
+            #notes                      Done
+            #tags / tag_string          Done
+            package_dict['ident_topic'] = iso_values["topic-category"][0] #Multi needed?
+            package_dict['ident_datetype'] = iso_values["dataset-reference-date"][0]["type"] #Multi needed? If yes Repeating subfields with ident_date
+            package_dict['ident_date'] = iso_values["dataset-reference-date"][0]["value"] #Multi needed? If yes Repeating subfields with ident_datetype
+            #package_dict['ident_date'] conversion datetime zu date oder Textefeld? -> Einfacher: Textfeld
+            package_dict['ident_maintenancefrequency'] = iso_values["frequency-of-update"]
+            package_dict['ident_organisation'] = iso_values["metadata-point-of-contact"][0]["organisation-name"] #Multi needed?
+            # All following commented out need xml-tree to be extracted from
+            # All following with [0]: Check if Multi is needed!
+            #package_dict['ident_deliverypoint']
+            xml_paths.append(ident_deliverypoint)
+            xml_names.append('ident_deliverypoint')
+            #package_dict['ident_city']
+            xml_paths.append(ident_city)
+            xml_names.append('ident_city')
+            #package_dict['ident_administrativearea']
+            xml_paths.append(ident_administrativearea)
+            xml_names.append('ident_administrativearea')
+            #package_dict['ident_postalcode']
+            xml_paths.append(ident_postalcode)
+            xml_names.append('ident_postalcode')
+            #package_dict['ident_country']
+            xml_paths.append(ident_country)
+            xml_names.append('ident_country')
+            #package_dict['ident_voice']
+            xml_paths.append(ident_voice)
+            xml_names.append('ident_voice')
+            #package_dict['ident_facsimile']
+            xml_paths.append(ident_facsimile)
+            xml_names.append('ident_facsimile')
+            package_dict['ident_email'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["email"]
+            package_dict['ident_online'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["online-resource"]["url"]
+            package_dict['ident_role'] = iso_values["metadata-point-of-contact"][0]["role"] 
+            #package_dict['ident_classification']
+            xml_paths.append(ident_classification)
+            xml_names.append('ident_classification')
+            package_dict['ident_accessconstraints'] = iso_values["access-constraints"]
+            #package_dict['ident_uselimitation']
+            xml_paths.append(ident_uselimitation)
+            xml_names.append('ident_uselimitation')
+            package_dict['ident_otherconstraints'] = iso_values["limitations-on-public-access"]
+            #package_dict['ident_otherconstraints']
+            xml_paths.append(ident_useconstraints)
+            xml_names.append('ident_useconstraints')
+            package_dict['distrib_organisation'] = iso_values["distributor"][0]["organisation-name"]
+            package_dict['distrib_individual'] = iso_values["distributor"][0]["individual-name"]
+            package_dict['distrib_position'] = iso_values["distributor"][0]["position-name"]
+            #package_dict['distrib_voice']
+            xml_paths.append(distrib_voice)
+            xml_names.append('distrib_voice')
+            #package_dict['distrib_facsimile']
+            xml_paths.append(distrib_facsimile)
+            xml_names.append('distrib_facsimile')
+            package_dict['distrib_email'] = iso_values["distributor"][0]["contact-info"]["email"]
+            package_dict['distrib_online'] = iso_values["distributor"][0]["contact-info"]["online-resource"]["url"]
+            package_dict['distrib_role'] = iso_values["distributor"][0]["role"]
+            #package_dict['dataquality_scopedescription_dataset']
+            xml_paths.append(dataquality_scopedescription_dataset)
+            xml_names.append('dataquality_scopedescription_dataset')
+            #package_dict['dataquality_scopedescription_other']
+            xml_paths.append(dataquality_scopedescription_other)
+            xml_names.append('dataquality_scopedescription_other')
+            package_dict['ident_alternatetitle'] = iso_values["alternate-title"]
+            #package_dict['quantitativeresult']
+            xml_paths.append(quantitativeresult)
+            xml_names.append('quantitativeresult')
+            #package_dict['refsystem_code']
+            #package_dict['refsystem_codespace']
+            #package_dict['refsystem_version']
+            xml_paths.append(refsystem_code)
+            xml_names.append('refsystem_code')
+            xml_paths.append(refsystem_codespace)
+            xml_names.append('refsystem_codespace')
+            xml_paths.append(refsystem_version)
+            xml_names.append('refsystem_version')
+            package_dict['contact_organisation'] = iso_values["responsible-organisation"][0]["organisation-name"]
+            package_dict['contact_individual'] = iso_values["responsible-organisation"][0]["individual-name"]
+            #package_dict['contact_deliverypoint']
+            xml_paths.append(contact_deliverypoint)
+            xml_names.append('contact_deliverypoint')
+            #package_dict['contact_city']
+            xml_paths.append(contact_city)
+            xml_names.append('contact_city')
+            #package_dict['contact_administrativearea']
+            xml_paths.append(contact_administrativearea)
+            xml_names.append('contact_administrativearea')
+            #package_dict['contact_postalcode']
+            xml_paths.append(contact_postalcode)
+            xml_names.append('contact_postalcode')
+            #package_dict['contact_country']
+            xml_paths.append(contact_country)
+            xml_names.append('contact_country')
+            #package_dict['contact_voice']
+            xml_paths.append(contact_voice)
+            xml_names.append('contact_voice')
+            #package_dict['contact_facsimile']
+            xml_paths.append(contact_facsimile)
+            xml_names.append('contact_facsimile')
+            package_dict['contact_email'] = iso_values["responsible-organisation"][0]["contact-info"]["email"]
+            package_dict['contact_online'] = iso_values["responsible-organisation"][0]["contact-info"]["online-resource"]["url"]
+            package_dict['contact_role'] = iso_values["responsible-organisation"][0]["role"]
+            #package_dict['dataquality_scopecode']
+            xml_paths.append(dataquality_scopecode)
+            xml_names.append('dataquality_scopecode')
+            #package_dict['distrib_format_name']
+            #package_dict['distrib_format_version']
+            # The both above are already a list of dicts in iso values -> fits for Repeating Subfields of the following
+            package_dict['distrib_format'] = iso_values["data-format"]
+            #package_dict['ident_identifier']
+            xml_paths.append(ident_identifier)
+            xml_names.append('ident_identifier')
+            #package_dict['owner_org'] Mapping 'ident_inividual' to MDK 'owner_org':
+            with open('mapping_orgas.json', 'r') as mapping:
+                data = mapping.read()
+            orgas = json.loads(data)
+            for orga in orgas:
+                if package_dict['ident_inividual'] in orgas[orga]:
+                    package_dict['owner_org'] = orga
+            # iso_type, siehe oben
+            package_dict['iso_standard'] = iso_values["metadata-standard-name"]
+            package_dict['iso_version'] = iso_values["metadata-standard-version"]
+            #package_dict['name'] Already right in package_dict
+
+            # Get Values from xml-tree
+            i = 0
+            for path in xml_paths:
+                check = root.find(path)
+                # Get name
+                name = xml_names[i]
+                i = i + 1
+                if isinstance(check, type(None)):
+                    # Path does not exist in XML
+                    value = ''
+                else:
+                    if not type(check.text) == str:
+                        try:
+                            value = check.attrib['codeListValue']
+                        except:
+                            # XML-Pfad existing, content empty (e.g. <gmd:URL />), so no to is-string (value:None) even if it would be if filled
+                            # --> fill with '' instead of None to be writable in csv
+                            value = ''
+                    else:
+                        value = check.text
+
+                # Check if multi, if yes, create list of values
+                check_multi = root.findall(path)
+                if len(check_multi) > 1:
+                    vals = []
+                    for val in check_multi:  
+                        if not type(check.text) == str:
+                            try:
+                                value = check.attrib['codeListValue']
+                                vals.append(value)
+                            except:
+                                value = ''
+                        else:
+                            print(val.text)
+                            vals.append(val.text)
+                    value = str(vals)
+
+                package_dict[name] = value
+
+            # Handle list of dicts for Repeating subfields
+            refsystem_list = []
+            k = 0
+            if 'refsystem_code' in package_dict.keys():
+                for ref_code in package_dict['refsystem_code']:
+                    ref_codespace = package_dict['refsystem_codespace'][k]
+                    ref_version = package_dict['refsystem_version'][k]
+                    k = k + 1
+                    refsystem_list.append({"refsystem_code": ref_code, "refsystem_codespace": ref_codespace, "refsystem_version": ref_version })
+            package_dict["refsystem"] = refsystem_list
+            
+                     
+                    
+        
+                
             
         # Map Iso Values to LHM-Schema
         # If not defined, target schema/ target_dataset type is "dataset"
@@ -146,6 +403,14 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         # Write files for Schema Mapping II
         tree = etree.ElementTree(xml_tree)
         tree.write(f'{path_xml}-iso_tree.xml')
+
+        for key in xml_tree:
+            if type(xml_tree[key]) == bytes:
+                xml_tree[key] = xml_tree[key].decode('utf-8')
+        data = json.dumps(xml_tree, indent=4)
+        f = open(f'{path_json}-xml_tree.json', 'w')
+        f.write(data)
+        f.close()
 
         for key in iso_values:
             if type(iso_values[key]) == bytes:

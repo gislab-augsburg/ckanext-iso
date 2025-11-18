@@ -1,15 +1,39 @@
 {
-    "bau-jz3": [
-        "Hauptabteilung Ingenieurbau, BAU-JZ3",
-        "Baureferat - BAU-JZ3",
-        "BAU-JZ3"
-    ],
-    "bau-gz1": [
-        "BAU-GZ1",
-        "BAU - GZ1"
-    ],
-    "plan-hai-2": [
-        "HAI Stadtentwicklungsplanung Abt. 2",
-        "HAI Abt. 2"
-    ]   
+    "bau": [],
+    "bau-g": ["BAU-G"],
+    "bau-j": [],
+    "bau-t": ["BAU-T", "BAU-Tiefbau"],
+    "dir": [],
+    "d-i-sta": [],
+    "gsr": [],
+    "gsr-sfm-gv": [],
+    "kr": [],
+    "kr-bewa": [],
+    "kvr": [],
+    "kr-gsm": ["KR-GSM", "GeodatenService MÃ¼nchen"],
+    "kvr-gl": [],
+    "kvr-i": ["KVR - I / 312"],
+    "mor": ["MOR"],
+    "mor-gb1": ["MOR-GB1", "MOR-GB1.4", "MOR-GB1.24", "MOR-GB1.23", "MOR - GB1.23", "MOR-GB1 (owner)"],
+    "mor-gb2": [],
+    "mor-gl": [],
+    "mor-rl": ["MOR-RL"],
+    "plan-haiii": ["PLAN-HAIII"],
+    "plan-haii": ["PLAN-HAII", "PLAN-HA II/57"],
+    "plan-hai": ["PLAN-HAI", "PLAN-HAI - 5"],
+    "plan-haiv": ["PLAN-HAIV"],
+    "plan-sg": [],
+    "rbs-a": [],
+    "rbs-zim": ["RBS-ZIM"],
+    "rbs": ["RBS"],
+    "rku": ["RKU","RKU-I-3"],
+    "plan": [],
+    "rku-gb-iii": [],
+    "rku-gb-ii": ["RKU-GB-II"],
+    "rku-gb-i": ["RKU-GB-I"],
+    "rku-gb-iv": ["RKU-GB-IV"],
+    "s-gl": ["S-GL-SP"],
+    "soz": [],
+    "sonstige": ["RAW", "Nachtergaele Freddy", "X", "KR-FV", "SWM", "GSR-GS", "S-I-BI", "LDBV", "KULT", "Name Fachreferat", "RBS-S-SP (FreizeitSport)", "RKU-IV-2131"]
 }
+
