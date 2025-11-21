@@ -292,6 +292,8 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             for orga in orgas:
                 if package_dict['ident_inividual'] in orgas[orga]:
                     package_dict['owner_org'] = orga
+                else:
+                    package_dict['owner_org'] = 'sonstige'
             # iso_type, siehe oben
             package_dict['iso_standard'] = iso_values["metadata-standard-name"]
             package_dict['iso_version'] = iso_values["metadata-standard-version"]
@@ -404,14 +406,6 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         tree = etree.ElementTree(xml_tree)
         tree.write(f'{path_xml}-iso_tree.xml')
 
-        for key in xml_tree:
-            if type(xml_tree[key]) == bytes:
-                xml_tree[key] = xml_tree[key].decode('utf-8')
-        data = json.dumps(xml_tree, indent=4)
-        f = open(f'{path_json}-xml_tree.json', 'w')
-        f.write(data)
-        f.close()
-
         for key in iso_values:
             if type(iso_values[key]) == bytes:
                 iso_values[key] = iso_values[key].decode('utf-8')
@@ -466,31 +460,24 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         :rtype: list
         '''
         return [TestValidator]
-
+    
 
 # Cutom validator 
 
 class TestValidator(BaseValidator):
-
     name = 'testval'
     title = 'Minimal Test Validation'
-
     _elements = [
         ('File Identifier', '/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString'),
         ('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel'),
         ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
-
     _check_name = [
         ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
-
-
     @classmethod
     def is_valid(cls, xml):
-
         errors = []
-
         for title, xpath in cls._elements:
             element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
             if len(element) == 0 or not element[0].text:
@@ -499,11 +486,32 @@ class TestValidator(BaseValidator):
                 print(f'Dataset passed validation for {title}, value is {element[0].text}')
         for title, xpath in cls._check_name:
             element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
-            if element != 'XYZ':
-                errors.append(('Orga name is not XYZ, it is {0}'.format(element[0].text), None))
+            print('----------------------')
+            print('MB_DEBUG_01')
+            try:
+                print(element)
+            except:
+                print('element not printable')
+            try:
+                print(element[0].text)
+            except:
+                print('element[0].text not printable')
+            try:
+                print(len(element))
+            except:
+                print('len(element) not printable')
+            try:
+                print(type(element))
+            except:
+                print('type(element) not printable')
+            print('----------------------')
+            if len(element) != 0:
+                if element[0].text != 'KR-GSM':
+                    errors.append(('Orga name (gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName) is not KR-GSM, it is {0}'.format(element[0].text), None))
+                else:
+                    errors.append(('No organisation name in path /gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString', None))
         if len(errors):
             return False, errors
-
         return True, []
 
 
