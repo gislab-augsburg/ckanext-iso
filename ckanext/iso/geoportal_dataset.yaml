@@ -11,7 +11,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: 'MDK Feld: ident_individual, pdf_nr: 2, geonetwork_nr: 8'
 
 # Feld Master
 - field_name: title
@@ -47,7 +47,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: 'MDK Feld: ident_topic, pdf_nr: 7, geonetwork_nr: 14, CSW Pfad: gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode, Codelist: https://standards.iso.org/iso/19139/resources/gmxCodelists.xml - MD_TopicCategoryCode '
   choices:
   - value: farming
   - value: biota
@@ -75,7 +75,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: creation
     label: Erstellung
@@ -90,7 +90,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_maintenancefrequency
@@ -98,7 +98,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: continual
   - value: daily
@@ -119,7 +119,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_deliverypoint
@@ -127,7 +127,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_city
@@ -135,7 +135,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_administrativearea
@@ -143,7 +143,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_postalcode
@@ -151,7 +151,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_country
@@ -159,7 +159,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP, multiple?
 - field_name: ident_voice
@@ -168,7 +168,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_facsimile
@@ -176,7 +176,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_email
@@ -184,7 +184,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_online
@@ -192,7 +192,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_role
@@ -200,7 +200,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: resourceProvider
   - value: custodian
@@ -217,24 +217,31 @@ dataset_fields:
 # Feld GP
 - field_name: ident_classification
   label: Anwendungsbeschränkungen
-  preset: multiple_select
+  form_snippet: multiple_checkbox_lhm_2.html
+  display_snippet: multiple_choice_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: unclassified
+    label: Unklassifiziert
   - value: restricted
+    label: Beschränkt
   - value: confidential
+    label: Vertraulich
   - value: secret
+    label: geheim
   - value: topSecret
+    label: streng geheim
 
 # Feld GP
 - field_name: ident_accessconstraints
   label: Zugriffsbeschränkungen
-  preset: multiple_select
+  form_snippet: multiple_checkbox_lhm_2.html
+  display_snippet: multiple_choice_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: copyright
   - value: patent
@@ -251,7 +258,7 @@ dataset_fields:
   preset: multiple_text
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_otherconstraints
@@ -259,15 +266,16 @@ dataset_fields:
   preset: multiple_text
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_useconstraints
   label: Sonstige Nutzungsbeschränkungen
-  preset: multiple_select
+  form_snippet: multiple_checkbox_lhm_2.html
+  display_snippet: multiple_choice_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: copyright
   - value: patent
@@ -284,7 +292,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_individual
@@ -292,7 +300,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_position
@@ -300,7 +308,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_voice
@@ -308,7 +316,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_facsimile
@@ -316,7 +324,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_email
@@ -324,7 +332,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_online
@@ -332,7 +340,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: distrib_role
@@ -340,7 +348,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: resourceProvider
   - value: custodian
@@ -360,7 +368,7 @@ dataset_fields:
   preset: multiple_text
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: dataquality_scopedescription_other
@@ -368,7 +376,7 @@ dataset_fields:
   preset: multiple_text
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: ident_alternatetitle
@@ -376,7 +384,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP, no values, no codelist ??
 - field_name: quantitativeresult
@@ -384,17 +392,17 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
-  - value: 1
-  - value: 2
-  - value: 3
+  - value: a
+  - value: b
+  - value: c
 
 # Feld GP
 - field_name: refsystem
   label: Koordinatensystem Label
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   form_snippet: repeating_subfields_lhm.html
   repeating_label: Koordinatensystem Repeating-Label
   repeating_subfields:
@@ -414,7 +422,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_individual
@@ -422,7 +430,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_deliverypoint
@@ -430,7 +438,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_city
@@ -438,7 +446,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_administrativearea
@@ -446,7 +454,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_postalcode
@@ -454,7 +462,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_country
@@ -462,7 +470,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_voice
@@ -470,7 +478,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_facsimile
@@ -478,7 +486,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_email
@@ -486,7 +494,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_online
@@ -494,7 +502,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: contact_role
@@ -502,7 +510,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: resourceProvider
   - value: custodian
@@ -522,7 +530,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: attribute
   - value: attributeType
@@ -545,7 +553,7 @@ dataset_fields:
 - field_name: distrib_format
   label: Diensteart und Version Label
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   form_snippet: repeating_subfields_lhm.html
   repeating_label: Diensteart und Version Repeating-Label
   repeating_subfields:
@@ -562,7 +570,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld Master
 - field_name: owner_org
@@ -581,7 +589,7 @@ dataset_fields:
   preset: select_lhm
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
   choices:
   - value: SV_ServiceIdentification
   - value: MD_DataIdentification
@@ -592,7 +600,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld GP
 - field_name: iso_version
@@ -600,7 +608,7 @@ dataset_fields:
   form_snippet: text_lhm.html
   # required: true
   is_info: true
-  info_text: Geoportal Abteilung / Unterabteilung
+  info_text: To Do
 
 # Feld Master
 - field_name: name
