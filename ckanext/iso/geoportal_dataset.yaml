@@ -1,9 +1,9 @@
 scheming_version: 2
-  dataset_type: geoportal
-  about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
-  about_url: http://github.com/ckan/ckanext-scheming
+dataset_type: geoportal
+about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
+about_url: http://github.com/ckan/ckanext-scheming
   
-  dataset_fields:
+dataset_fields:
   
   # Feld GP
   - field_name: ident_individual
@@ -688,7 +688,7 @@ scheming_version: 2
   #   label: lineage
   
   
-  resource_fields:
+resource_fields:
 
   - field_name: url
     label: URL
@@ -705,3 +705,4 @@ scheming_version: 2
   - field_name: format
     label: Format
     preset: resource_format_autocomplete
+    
