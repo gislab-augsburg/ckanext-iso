@@ -46,6 +46,14 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         f.write(data)
         f.close()
 
+        for key in iso_values:
+            if type(iso_values[key]) == bytes:
+                iso_values[key] = iso_values[key].decode('utf-8')
+        data = json.dumps(iso_values, indent=4)
+        f = open(f'{path_json}-iso_values.json', 'w')
+        f.write(data)
+        f.close()
+
 
         # Check Harvest Source Configuration:
         '''
@@ -140,6 +148,8 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             refsystem_code = f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}code/{gco}CharacterString'
             refsystem_codespace =f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}codeSpace/{gco}CharacterString'
             refsystem_version = f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}version/{gco}CharacterString'
+            contact_organisation = f'{contact}/{gmd}organisationName/{gco}CharacterString'
+            contact_individual = f'{contact}/{gmd}individualName/{gco}CharacterString'
             contact_deliverypoint = f'{contact}/{adress}/{gmd}deliveryPoint/{gco}CharacterString'
             contact_city = f'{contact}/{adress}/{gmd}city/{gco}CharacterString'
             contact_administrativearea = f'{contact}/{adress}/{gmd}administrativeArea/{gco}CharacterString'
@@ -147,22 +157,21 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             contact_country = f'{contact}/{adress}/{gmd}country/{gco}CharacterString'
             contact_voice = f'{contact}/{phone}/{gmd}voice/{gco}CharacterString'
             contact_facsimile = f'{contact}/{phone}/{gmd}facsimile/{gco}CharacterString'
+            contact_email = f'{contact}/{adress}/{gmd}electronicMailAddress/{gco}CharacterString'
+            contact_online = f'{contact}/{online}/{gmd}linkage/{gmd}URL'
+            contact_role = f'{contact}/{gmd}role/{gmd}CI_RoleCode'
             dataquality_scopecode = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality/{gmd}scope/{gmd}DQ_Scope/{gmd}level/{gmd}MD_ScopeCode'
             ident_identifier = f'{service_ident}/{gmd}citation/{gmd}CI_Citation/{gmd}identifier/{gmd}MD_Identifier/{gmd}code/{gco}CharacterString'
+            service_type = f'{service_ident}/{srv}serviceType/{gco}LocalName'
 
             # Get iso_type
             if len(root.findall(f".//{gmd}MD_DataIdentification")) == 1:
                 package_dict['iso_type'] = 'MD_DataIdentification'
-                print('---------------- WORKING dataset ---------------')
+                #print(f'---------------- WORKING dataset {guid} ---------------')
             else:
                 if len(root.findall(f".//{srv}SV_ServiceIdentification")) == 1:
                     package_dict['iso_type'] = 'SV_ServiceIdentification'
-                    print('---------------- WORKING Service ---------------')
-
-            # Replace if iso_type is data
-            if service_ident in xml_path:
-                if package_dict['iso_type'] == 'MD_DataIdentification':
-                    xml_path = xml_path.replace(service_ident, data_ident)
+                    #print('---------------- WORKING Service {guid} ---------------')
 
             # Define List for attributes that need to be xtracted from xml-tree
             xml_paths = []
@@ -170,138 +179,290 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             
 
             # Define LHM Geoportal-Schema fields
-
-            package_dict['ident_inividual'] = iso_values["metadata-point-of-contact"][0]["individual-name"] 
+            try:
+                package_dict['ident_individual'] = iso_values["metadata-point-of-contact"][0]["individual-name"] 
+            except:
+                package_dict['ident_individual'] = ''
+                print(f'MB_MISSING ident_individual at {guid}')
             #title                      Done
             #notes                      Done
             #tags / tag_string          Done
-            package_dict['ident_topic'] = iso_values["topic-category"][0] #Multi needed?
-            package_dict['ident_datetype'] = iso_values["dataset-reference-date"][0]["type"] #Multi needed? If yes Repeating subfields with ident_date
-            package_dict['ident_date'] = iso_values["dataset-reference-date"][0]["value"] #Multi needed? If yes Repeating subfields with ident_datetype
-            #package_dict['ident_date'] conversion datetime zu date oder Textefeld? -> Einfacher: Textfeld
-            package_dict['ident_maintenancefrequency'] = iso_values["frequency-of-update"]
-            package_dict['ident_organisation'] = iso_values["metadata-point-of-contact"][0]["organisation-name"] #Multi needed?
+
+            #package_dict['ident_topic'] = iso_values["topic-category"][0] #Multi needed? -> no, only lists with one entry appearing
+            try:
+                package_dict['ident_topic'] = iso_values["topic-category"][0]
+            except:
+                package_dict['ident_topic'] = ''
+                print(f'MB_MISSING ident_datetype at {guid}')
+
+            try:
+                package_dict['ident_datetype'] = iso_values["dataset-reference-date"][0]["type"]  # Multi needed? If yes Repeating subfields with ident_date_
+            except:
+                package_dict['ident_datetype'] = ''
+                print(f'MB_MISSING ident_datetype at {guid}')
+
+            try:
+                package_dict['ident_date_'] = iso_values["dataset-reference-date"][0]["value"]  # Multi needed? If yes Repeating subfields with ident_datetype
+            except:
+                package_dict['ident_date_'] = ''
+                print(f'MB_MISSING ident_date_ at {guid}')
+
+            # package_dict['ident_date_'] conversion datetime zu date oder Textefeld? -> Einfacher: Textfeld
+            try:
+                package_dict['ident_maintenancefrequency'] = iso_values["frequency-of-update"]
+            except:
+                package_dict['ident_maintenancefrequency'] = ''
+                print(f'MB_MISSING ident_maintenancefrequency at {guid}')
+
+            try:
+                package_dict['ident_organisation'] = iso_values["metadata-point-of-contact"][0]["organisation-name"]  # Multi needed?
+            except:
+                package_dict['ident_organisation'] = ''
+                print(f'MB_MISSING ident_organisation at {guid}')
+
             # All following commented out need xml-tree to be extracted from
             # All following with [0]: Check if Multi is needed!
-            #package_dict['ident_deliverypoint']
+            # package_dict['ident_deliverypoint']
             xml_paths.append(ident_deliverypoint)
             xml_names.append('ident_deliverypoint')
-            #package_dict['ident_city']
+            # package_dict['ident_city']
             xml_paths.append(ident_city)
             xml_names.append('ident_city')
-            #package_dict['ident_administrativearea']
+            # package_dict['ident_administrativearea']
             xml_paths.append(ident_administrativearea)
             xml_names.append('ident_administrativearea')
-            #package_dict['ident_postalcode']
+            # package_dict['ident_postalcode']
             xml_paths.append(ident_postalcode)
             xml_names.append('ident_postalcode')
-            #package_dict['ident_country']
+            # package_dict['ident_country']
             xml_paths.append(ident_country)
             xml_names.append('ident_country')
-            #package_dict['ident_voice']
+            # package_dict['ident_voice']
             xml_paths.append(ident_voice)
             xml_names.append('ident_voice')
-            #package_dict['ident_facsimile']
+            # package_dict['ident_facsimile']
             xml_paths.append(ident_facsimile)
             xml_names.append('ident_facsimile')
-            package_dict['ident_email'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["email"]
-            package_dict['ident_online'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["online-resource"]["url"]
-            package_dict['ident_role'] = iso_values["metadata-point-of-contact"][0]["role"] 
-            #package_dict['ident_classification']
+
+            try:
+                package_dict['ident_email'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["email"]
+            except:
+                package_dict['ident_email'] = ''
+                print(f'MB_MISSING ident_email at {guid}')
+
+            try:
+                package_dict['ident_online'] = iso_values["metadata-point-of-contact"][0]["contact-info"]["online-resource"]["url"]
+            except:
+                package_dict['ident_online'] = ''
+                print(f'MB_MISSING ident_online at {guid}')
+
+            try:
+                package_dict['ident_role'] = iso_values["metadata-point-of-contact"][0]["role"]
+            except:
+                package_dict['ident_role'] = ''
+                print(f'MB_MISSING ident_role at {guid}')
+
+            # package_dict['ident_classification']
             xml_paths.append(ident_classification)
             xml_names.append('ident_classification')
-            package_dict['ident_accessconstraints'] = iso_values["access-constraints"]
-            #package_dict['ident_uselimitation']
+
+            try:
+                package_dict['ident_accessconstraints'] = iso_values["access-constraints"]
+            except:
+                package_dict['ident_accessconstraints'] = ''
+                print(f'MB_MISSING ident_accessconstraints at {guid}')
+
+            # package_dict['ident_uselimitation']
             xml_paths.append(ident_uselimitation)
             xml_names.append('ident_uselimitation')
-            package_dict['ident_otherconstraints'] = iso_values["limitations-on-public-access"]
-            #package_dict['ident_otherconstraints']
+
+            try:
+                package_dict['ident_otherconstraints'] = iso_values["limitations-on-public-access"]
+            except:
+                package_dict['ident_otherconstraints'] = ''
+                print(f'MB_MISSING ident_otherconstraints at {guid}')
+
+            # package_dict['ident_otherconstraints']
             xml_paths.append(ident_useconstraints)
             xml_names.append('ident_useconstraints')
-            package_dict['distrib_organisation'] = iso_values["distributor"][0]["organisation-name"]
-            package_dict['distrib_individual'] = iso_values["distributor"][0]["individual-name"]
-            package_dict['distrib_position'] = iso_values["distributor"][0]["position-name"]
-            #package_dict['distrib_voice']
+
+            try:
+                package_dict['distrib_organisation'] = iso_values["distributor"][0]["organisation-name"]
+            except:
+                package_dict['distrib_organisation'] = ''
+                print(f'MB_MISSING distrib_organisation at {guid}')
+
+            try:
+                package_dict['distrib_individual'] = iso_values["distributor"][0]["individual-name"]
+            except:
+                package_dict['distrib_individual'] = ''
+                print(f'MB_MISSING distrib_individual at {guid}')
+
+            try:
+                package_dict['distrib_position'] = iso_values["distributor"][0]["position-name"]
+            except:
+                package_dict['distrib_position'] = ''
+                print(f'MB_MISSING distrib_position at {guid}')
+
+            # package_dict['distrib_voice']
             xml_paths.append(distrib_voice)
             xml_names.append('distrib_voice')
-            #package_dict['distrib_facsimile']
+            # package_dict['distrib_facsimile']
             xml_paths.append(distrib_facsimile)
             xml_names.append('distrib_facsimile')
-            package_dict['distrib_email'] = iso_values["distributor"][0]["contact-info"]["email"]
-            package_dict['distrib_online'] = iso_values["distributor"][0]["contact-info"]["online-resource"]["url"]
-            package_dict['distrib_role'] = iso_values["distributor"][0]["role"]
-            #package_dict['dataquality_scopedescription_dataset']
+
+            try:
+                package_dict['distrib_email'] = iso_values["distributor"][0]["contact-info"]["email"]
+            except:
+                package_dict['distrib_email'] = ''
+                print(f'MB_MISSING distrib_email at {guid}')
+
+            try:
+                package_dict['distrib_online'] = iso_values["distributor"][0]["contact-info"]["online-resource"]["url"]
+            except:
+                package_dict['distrib_online'] = ''
+                print(f'MB_MISSING distrib_online at {guid}')
+
+            try:
+                package_dict['distrib_role'] = iso_values["distributor"][0]["role"]
+            except:
+                package_dict['distrib_role'] = ''
+                print(f'MB_MISSING distrib_role at {guid}')
+
+            # package_dict['dataquality_scopedescription_dataset']
             xml_paths.append(dataquality_scopedescription_dataset)
             xml_names.append('dataquality_scopedescription_dataset')
-            #package_dict['dataquality_scopedescription_other']
+            # package_dict['dataquality_scopedescription_other']
             xml_paths.append(dataquality_scopedescription_other)
             xml_names.append('dataquality_scopedescription_other')
-            package_dict['ident_alternatetitle'] = iso_values["alternate-title"]
-            #package_dict['quantitativeresult']
+
+            try:
+                package_dict['ident_alternatetitle'] = iso_values["alternate-title"]
+            except:
+                package_dict['ident_alternatetitle'] = ''
+                print(f'MB_MISSING ident_alternatetitle at {guid}')
+
+            # package_dict['quantitativeresult']
             xml_paths.append(quantitativeresult)
             xml_names.append('quantitativeresult')
-            #package_dict['refsystem_code']
-            #package_dict['refsystem_codespace']
-            #package_dict['refsystem_version']
+
+            # package_dict['refsystem_code']
+            # package_dict['refsystem_codespace']
+            # package_dict['refsystem_version']
             xml_paths.append(refsystem_code)
             xml_names.append('refsystem_code')
             xml_paths.append(refsystem_codespace)
             xml_names.append('refsystem_codespace')
             xml_paths.append(refsystem_version)
             xml_names.append('refsystem_version')
-            package_dict['contact_organisation'] = iso_values["responsible-organisation"][0]["organisation-name"]
-            package_dict['contact_individual'] = iso_values["responsible-organisation"][0]["individual-name"]
-            #package_dict['contact_deliverypoint']
+            # package_dict['contact_organisation']
+            xml_paths.append(contact_organisation)
+            xml_names.append('contact_organisation')
+            # package_dict['contact_individual']
+            xml_paths.append(contact_individual)
+            xml_names.append('contact_individual')
+            # package_dict['contact_deliverypoint']
             xml_paths.append(contact_deliverypoint)
             xml_names.append('contact_deliverypoint')
-            #package_dict['contact_city']
+            # package_dict['contact_city']
             xml_paths.append(contact_city)
             xml_names.append('contact_city')
-            #package_dict['contact_administrativearea']
+            # package_dict['contact_administrativearea']
             xml_paths.append(contact_administrativearea)
             xml_names.append('contact_administrativearea')
-            #package_dict['contact_postalcode']
+            # package_dict['contact_postalcode']
             xml_paths.append(contact_postalcode)
             xml_names.append('contact_postalcode')
-            #package_dict['contact_country']
+            # package_dict['contact_country']
             xml_paths.append(contact_country)
             xml_names.append('contact_country')
-            #package_dict['contact_voice']
+            # package_dict['contact_voice']
             xml_paths.append(contact_voice)
             xml_names.append('contact_voice')
-            #package_dict['contact_facsimile']
+            # package_dict['contact_facsimile']
             xml_paths.append(contact_facsimile)
             xml_names.append('contact_facsimile')
-            package_dict['contact_email'] = iso_values["responsible-organisation"][0]["contact-info"]["email"]
-            package_dict['contact_online'] = iso_values["responsible-organisation"][0]["contact-info"]["online-resource"]["url"]
-            package_dict['contact_role'] = iso_values["responsible-organisation"][0]["role"]
-            #package_dict['dataquality_scopecode']
+            # package_dict['contact_email']
+            xml_paths.append(contact_email)
+            xml_names.append('contact_email')
+            # package_dict['contact_online']
+            xml_paths.append(contact_online)
+            xml_names.append('contact_online')
+            # package_dict['contact_role']
+            xml_paths.append(contact_role)
+            xml_names.append('contact_role')
+            # package_dict['dataquality_scopecode']
             xml_paths.append(dataquality_scopecode)
             xml_names.append('dataquality_scopecode')
-            #package_dict['distrib_format_name']
-            #package_dict['distrib_format_version']
+            # package_dict['distrib_format_name']
+            # package_dict['distrib_format_version']
             # The both above are already a list of dicts in iso values -> fits for Repeating Subfields of the following
-            package_dict['distrib_format'] = iso_values["data-format"]
-            #package_dict['ident_identifier']
+            ### CHECK!!! ###
+            try:
+                package_dict['distrib_format'] = []
+                for form in iso_values["data-format"]:
+                    if 'name' in form.keys():
+                        d_name = form['name']
+                    else:
+                        d_name = ''
+                    if 'version' in form.keys():
+                        d_version = form['version']
+                    else:
+                        d_version = ''
+                    package_dict['distrib_format'].append({'distrib_format_name': d_name, 'distrib_format_version': d_version})
+                print(f'MB_WORKING distrib_format at {guid}')
+                print(package_dict['distrib_format'])
+            except:
+                package_dict['distrib_format'] = []
+                print(f'MB_MISSING distrib_format at {guid}')
+
+            # package_dict['ident_identifier']
             xml_paths.append(ident_identifier)
             xml_names.append('ident_identifier')
-            #package_dict['owner_org'] Mapping 'ident_inividual' to MDK 'owner_org':
-            with open('mapping_orgas.json', 'r') as mapping:
-                data = mapping.read()
-            orgas = json.loads(data)
-            for orga in orgas:
-                if package_dict['ident_inividual'] in orgas[orga]:
-                    package_dict['owner_org'] = orga
-                else:
-                    package_dict['owner_org'] = 'sonstige'
+            # package_dict['owner_org'] Mapping 'ident_individual' to MDK 'owner_org' look further down
+            #with open('/usr/local/lib/python3.8/dist-packages/ckanext/iso/mapping_orgas.json', 'r') as mapping:
+            #    data = mapping.read()
+            #orgas = json.loads(data)
+            #for orga in orgas:
+            #    if package_dict['ident_individual'] in orgas[orga]:
+            #        package_dict['owner_org'] = orga
+            #    else:
+            #        package_dict['owner_org'] = 'sonstige'
+
             # iso_type, siehe oben
-            package_dict['iso_standard'] = iso_values["metadata-standard-name"]
-            package_dict['iso_version'] = iso_values["metadata-standard-version"]
-            #package_dict['name'] Already right in package_dict
+            try:
+                package_dict['iso_standard'] = iso_values["metadata-standard-name"]
+            except:
+                package_dict['iso_standard'] = ''
+                print(f'MB_MISSING iso_standard at {guid}')
+
+            try:
+                package_dict['iso_version'] = iso_values["metadata-standard-version"]
+            except:
+                package_dict['iso_version'] = ''
+                print(f'MB_MISSING iso_version at {guid}')
+            
+            # package_dict['name'] Already right in package_dict
+            # package_dict['service_type']
+            xml_paths.append(service_type)
+            xml_names.append('service_type')
+            
+            # package_dict['file_identifier']
+            try:
+                package_dict['file_identifier'] = guid
+            except:
+                package_dict['file_identifier'] = ''
+                print(f'MB_MISSING guid at {iso_values}')
 
             # Get Values from xml-tree
             i = 0
             for path in xml_paths:
+
+                # Replace if iso_type is data
+                if service_ident in path:
+                    if package_dict['iso_type'] == 'MD_DataIdentification':
+                        path = path.replace(service_ident, data_ident)
+                        
                 check = root.find(path)
                 # Get name
                 name = xml_names[i]
@@ -332,25 +493,26 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                             except:
                                 value = ''
                         else:
-                            print(val.text)
+                            #print(val.text)
                             vals.append(val.text)
-                    value = str(vals)
+                    #value = str(vals)
+                    value = vals
 
                 package_dict[name] = value
 
             # Handle list of dicts for Repeating subfields
             refsystem_list = []
             k = 0
-            if 'refsystem_code' in package_dict.keys():
-                for ref_code in package_dict['refsystem_code']:
-                    ref_codespace = package_dict['refsystem_codespace'][k]
-                    ref_version = package_dict['refsystem_version'][k]
-                    k = k + 1
-                    refsystem_list.append({"refsystem_code": ref_code, "refsystem_codespace": ref_codespace, "refsystem_version": ref_version })
+            try:
+                if 'refsystem_code' in package_dict.keys() and type(package_dict['refsystem_code']) == list:
+                    for ref_code in package_dict['refsystem_code']:
+                        ref_codespace = package_dict['refsystem_codespace'][k]
+                        ref_version = package_dict['refsystem_version'][k]
+                        k = k + 1
+                        refsystem_list.append({"refsystem_code": ref_code, "refsystem_codespace": ref_codespace, "refsystem_version": ref_version })
+            except:
+                print(f'MB_MISSING refsystem list at {guid} is not a list')
             package_dict["refsystem"] = refsystem_list
-            
-                     
-                    
         
                 
             
@@ -397,22 +559,30 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
         f = open(filepath_config)
         data = json.load(f)
+        # Use 'Sonstige' if not matching
+        package_dict['owner_org'] = 'sonstige'
         for orga, iso_orgas in data.items():
-            if iso_values['responsible-organisation'][0]['individual-name'] in iso_orgas:
+            #print('--------------')
+            #print(orga, str(iso_orgas), f"'{package_dict['ident_individual']}'", package_dict['name'])
+            if package_dict['ident_individual'] in iso_orgas:
+                #print('FOUND :)')
                 package_dict['owner_org'] = orga
-
+                break
+            else:
+                package_dict['owner_org'] = 'sonstige'
+            #print('--------------')
 
         # Write files for Schema Mapping II
         tree = etree.ElementTree(xml_tree)
         tree.write(f'{path_xml}-iso_tree.xml')
 
-        for key in iso_values:
-            if type(iso_values[key]) == bytes:
-                iso_values[key] = iso_values[key].decode('utf-8')
-        data = json.dumps(iso_values, indent=4)
-        f = open(f'{path_json}-iso_values.json', 'w')
-        f.write(data)
-        f.close()
+        #for key in iso_values:
+        #    if type(iso_values[key]) == bytes:
+        #        iso_values[key] = iso_values[key].decode('utf-8')
+        #data = json.dumps(iso_values, indent=4)
+        #f = open(f'{path_json}-iso_values.json', 'w')
+        #f.write(data)
+        #f.close()
 
         for key in package_dict:
             if type(package_dict[key]) == bytes:
@@ -469,11 +639,13 @@ class TestValidator(BaseValidator):
     title = 'Minimal Test Validation'
     _elements = [
         ('File Identifier', '/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString'),
-        ('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel'),
-        ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
+        #('Hierarchy Level', '/gmd:MD_Metadata/gmd:hierarchyLevel'),
+        #('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString'),
+        ('Metadaten Organisation (distrib_organisation)', '/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString'),
+        ('Metadaten Ansprechpartner (distrib_individual)', '/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
         ]
     _check_name = [
-        ('Organisation Name', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString')
+        ('Daten Organisation', '/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString')
         ]
     @classmethod
     def is_valid(cls, xml):
@@ -486,30 +658,28 @@ class TestValidator(BaseValidator):
                 print(f'Dataset passed validation for {title}, value is {element[0].text}')
         for title, xpath in cls._check_name:
             element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
-            print('----------------------')
-            print('MB_DEBUG_01')
-            try:
-                print(element)
-            except:
-                print('element not printable')
-            try:
-                print(element[0].text)
-            except:
-                print('element[0].text not printable')
-            try:
-                print(len(element))
-            except:
-                print('len(element) not printable')
-            try:
-                print(type(element))
-            except:
-                print('type(element) not printable')
-            print('----------------------')
+            #print('----------------------')
+            #print('MB_DEBUG_01')
+            #try:
+            #    print(element)
+            #except:
+            #    print('element not printable')
+            #try:
+            #    print(element[0].text)
+            #except:
+            #    print('element[0].text not printable')
+            #try:
+            #    print(len(element))
+            #except:
+            #    print('len(element) not printable')
+            #try:
+            #    print(type(element))
+            #except:
+            #    print('type(element) not printable')
+            #print('----------------------')
             if len(element) != 0:
-                if element[0].text != 'KR-GSM':
-                    errors.append(('Orga name (gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName) is not KR-GSM, it is {0}'.format(element[0].text), None))
-                else:
-                    errors.append(('No organisation name in path /gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString', None))
+                if 'LHM' not in element[0].text and 'Landeshauptstadt München' not in element[0].text:
+                    errors.append(('Value of element Daten Organisation (contact_organisation) does not include "LHM" or "Landeshauptstadt München", it is "{0}"'.format(element[0].text), None))
         if len(errors):
             return False, errors
         return True, []
@@ -526,5 +696,3 @@ def _get_object_extra(harvest_object, key):
         if extra.key == key:
             return extra.value
     return None
-        
-

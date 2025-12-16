@@ -1,738 +1,707 @@
 scheming_version: 2
-dataset_type: geoportal
-about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
-about_url: http://github.com/ckan/ckanext-scheming
-
-dataset_fields:
-
-# Feld GP
-- field_name: abteilung_unterabteilung
-  label: Abteilung / Unterabteilung
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: 'MDK Feld: ident_individual, pdf_nr: 2, geonetwork_nr: 8'
-
-# Feld Master
-- field_name: title
-  label: Title
-  preset: title
-  form_snippet: large_text_lhm.html
-  form_placeholder: Thema | NAME_DER_TABELLE
-  is_info: true
-  info_text: 'Thema | NAME_DER_TABELLE. Der Titel beteht aus dem Thema (für Geodatenpool: ehemals Datenbestand) und dem Namen der Tabelle in der Datenbank.'
-  required: true
-
-# Feld Master
-- field_name: notes
-  label: Description
-  form_snippet: markdown_lhm.html
-  form_placeholder: eg. Some useful notes about the data
-  is_info: true
-  info_text: Klare und prägnante Beschreibung des Datensatzes, damit auch Laien den Inhalt verstehen und einschätzen können. Dazu können neben dem konkreten Inhalt z.B. die räumliche Abdeckung, Vollständigkeit, Urheberschaft und Aktualität gehören.
-  required: true
-
-# Feld Master
-- field_name: tag_string
-  label: Schlagworte
-  preset: tag_string_autocomplete
-  form_snippet: text_lhm.html
-  form_placeholder: z.B. Gesundheit; Umwelt;
-  is_info: true
-  info_text: Schlagworte sind i.d.R. Substantive zur inhaltlichen Beschreibung des Datensatzes. Es können mehrere Schlagworte vergeben werden. 
-
-# Feld GP
-- field_name: ident_topic
-  label: Thematik
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: 'MDK Feld: ident_topic, pdf_nr: 7, geonetwork_nr: 14, CSW Pfad: gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode, Codelist: https://standards.iso.org/iso/19139/resources/gmxCodelists.xml - MD_TopicCategoryCode '
-  choices:
-  - value: farming
-  - value: biota
-  - value: boundaries
-  - value: climatologyMeteorologyAtmosphere
-  - value: economy
-  - value: elevation
-  - value: environment
-  - value: geoscientificInformation
-  - value: health
-  - value: imageryBaseMapsEarthCover
-  - value: intelligenceMilitary
-  - value: inlandWaters
-  - value: location
-  - value: oceans
-  - value: planningCadastre
-  - value: society
-  - value: structure
-  - value: transportation
-  - value: utilitiesCommunication
-
-# Feld GP
-- field_name: ident_datetype
-  label: Datumsart
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: creation
-    label: Erstellung
-  - value: publication
-    label: Publikation
-  - value: revision
-    label: Revision
-
-# Feld GP
-- field_name: ident_date
-  label: Datum
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_maintenancefrequency
-  label: Aktualisierungsintervall
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: continual
-  - value: daily
-  - value: weekly
-  - value: fortnightly
-  - value: monthly
-  - value: quarterly
-  - value: biannually
-  - value: annually
-  - value: asNeeded
-  - value: irregular
-  - value: notPlanned
-  - value: unknown
-
-# Feld GP
-- field_name: ident_organisation
-  label: Vertrieb Organisation
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_deliverypoint
-  label: Vertrieb Straße
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_city
-  label: Vertrieb Stadt
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_administrativearea
-  label: Vertrieb Bundesland
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_postalcode
-  label: Vertrieb Postleitzahl
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_country
-  label: Vertrieb Land
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP, multiple?
-- field_name: ident_voice
-  label: Vertrieb Telefon
-  #preset: multiple_text
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_facsimile
-  label: Vertrieb Fax
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_email
-  label: Vertrieb E-Mail
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_online
-  label: Vertrieb Homepage
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_role
-  label: Vertrieb Funktion
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: resourceProvider
-  - value: custodian
-  - value: owner
-  - value: user
-  - value: distributor
-  - value: originator
-  - value: pointOfContact
-  - value: principalInvestigator
-  - value: processor
-  - value: publisher
-  - value: author
-
-# Feld GP
-- field_name: ident_classification
-  label: Anwendungsbeschränkungen
-  form_snippet: multiple_checkbox_lhm_2.html
-  display_snippet: multiple_choice_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: unclassified
-    label: Unklassifiziert
-  - value: restricted
-    label: Beschränkt
-  - value: confidential
-    label: Vertraulich
-  - value: secret
-    label: geheim
-  - value: topSecret
-    label: streng geheim
-
-# Feld GP
-- field_name: ident_accessconstraints
-  label: Zugriffsbeschränkungen
-  form_snippet: multiple_checkbox_lhm_2.html
-  display_snippet: multiple_choice_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: copyright
-  - value: patent
-  - value: patentPending
-  - value: trademark
-  - value: license
-  - value: intellectualPropertyRights
-  - value: restricted
-  - value: otherRestrictions
-
-# Feld GP
-- field_name: ident_uselimitation
-  label: Nutzungsbeschränkungen
-  preset: multiple_text
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_otherconstraints
-  label: Sonstige Beschränkungen
-  preset: multiple_text
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_useconstraints
-  label: Sonstige Nutzungsbeschränkungen
-  form_snippet: multiple_checkbox_lhm_2.html
-  display_snippet: multiple_choice_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: copyright
-  - value: patent
-  - value: patentPending
-  - value: trademark
-  - value: license
-  - value: intellectualPropertyRights
-  - value: restricted
-  - value: otherRestrictions
+  dataset_type: geoportal
+  about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
+  about_url: http://github.com/ckan/ckanext-scheming
   
-# Feld GP
-- field_name: distrib_organisation
-  label: Metadaten Organisation
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
+  dataset_fields:
+  
+  # Feld GP
+  - field_name: ident_individual
+    label: Abteilung / Unterabteilung
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: 'MDK Feld: ident_individual, pdf_nr: 2, geonetwork_nr: 8'
+  
+  # Feld Master
+  - field_name: title
+    label: Title
+    preset: title
+    form_snippet: large_text_lhm.html
+    form_placeholder: Thema | NAME_DER_TABELLE
+    is_info: true
+    info_text: 'Thema | NAME_DER_TABELLE. Der Titel beteht aus dem Thema (für Geodatenpool: ehemals Datenbestand) und dem Namen der Tabelle in der Datenbank.'
+    required: true
+  
+  # Feld Master
+  - field_name: notes
+    label: Description
+    form_snippet: markdown_lhm.html
+    form_placeholder: eg. Some useful notes about the data
+    is_info: true
+    info_text: Klare und prägnante Beschreibung des Datensatzes, damit auch Laien den Inhalt verstehen und einschätzen können. Dazu können neben dem konkreten Inhalt z.B. die räumliche Abdeckung, Vollständigkeit, Urheberschaft und Aktualität gehören.
+    required: true
+  
+  # Feld Master
+  - field_name: tag_string
+    label: Schlagworte
+    preset: tag_string_autocomplete
+    form_snippet: text_lhm.html
+    form_placeholder: z.B. Gesundheit; Umwelt;
+    is_info: true
+    info_text: Schlagworte sind i.d.R. Substantive zur inhaltlichen Beschreibung des Datensatzes. Es können mehrere Schlagworte vergeben werden. 
+  
+  # Feld GP
+  - field_name: ident_topic
+    label: Thematik
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: 'MDK Feld: ident_topic, pdf_nr: 7, geonetwork_nr: 14, CSW Pfad: gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode, Codelist: https://standards.iso.org/iso/19139/resources/gmxCodelists.xml - MD_TopicCategoryCode '
+    choices:
+    - value: ''
+    - value: farming
+    - value: biota
+    - value: boundaries
+    - value: climatologyMeteorologyAtmosphere
+    - value: economy
+    - value: elevation
+    - value: environment
+    - value: geoscientificInformation
+    - value: health
+    - value: imageryBaseMapsEarthCover
+    - value: intelligenceMilitary
+    - value: inlandWaters
+    - value: location
+    - value: oceans
+    - value: planningCadastre
+    - value: society
+    - value: structure
+    - value: transportation
+    - value: utilitiesCommunication
+  
+  # Feld GP
+  - field_name: ident_datetype
+    label: Datumsart
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+      label: ''
+    - value: creation
+      label: creation
+    - value: publication
+      label: publication
+    - value: revision
+      label: revision
+  
+  # Feld GP
+  - field_name: ident_date_
+    label: Datum
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_maintenancefrequency
+    label: Aktualisierungsintervall
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: continual
+    - value: daily
+    - value: weekly
+    - value: fortnightly
+    - value: monthly
+    - value: quarterly
+    - value: biannually
+    - value: annually
+    - value: asNeeded
+    - value: irregular
+    - value: notPlanned
+    - value: unknown
+  
+  # Feld GP
+  - field_name: ident_organisation
+    label: Vertrieb Organisation
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_deliverypoint
+    label: Vertrieb Straße
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_city
+    label: Vertrieb Stadt
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_administrativearea
+    label: Vertrieb Bundesland
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_postalcode
+    label: Vertrieb Postleitzahl
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_country
+    label: Vertrieb Land
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP, multiple?
+  - field_name: ident_voice
+    label: Vertrieb Telefon
+    #preset: multiple_text
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_facsimile
+    label: Vertrieb Fax
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_email
+    label: Vertrieb E-Mail
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_online
+    label: Vertrieb Homepage
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_role
+    label: Vertrieb Funktion
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: resourceProvider
+    - value: custodian
+    - value: owner
+    - value: user
+    - value: distributor
+    - value: originator
+    - value: pointOfContact
+    - value: principalInvestigator
+    - value: processor
+    - value: publisher
+    - value: author
+  
+  - field_name: ident_classification
+    label: Anwendungsbeschränkungen
+    form_snippet: multiple_checkbox_lhm_2.html
+    display_snippet: multiple_choice.html
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: unclassified
+      label: unclassified
+    - value: restricted
+      label: restricted
+    - value: confidential
+      label: confidential
+    - value: secret
+      label: secret
+    - value: topSecret
+      label: topSecret
+  
+  # Feld GP
+  - field_name: ident_accessconstraints
+    label: Zugriffsbeschränkungen
+    form_snippet: multiple_checkbox_lhm_2.html
+    display_snippet: multiple_choice.html
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: copyright
+      label: copyright
+    - value: patent
+      label: patent
+    - value: patentPending
+      label: patentPending
+    - value: trademark
+      label: trademark
+    - value: license
+      label: license
+    - value: intellectualPropertyRights
+      label: intellectualPropertyRights
+    - value: restricted
+      label: restricted
+    - value: otherRestrictions
+      label: otherRestrictions
+  
+  # Feld GP
+  - field_name: ident_uselimitation
+    label: Nutzungsbeschränkungen
+    preset: multiple_text
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_otherconstraints
+    label: Sonstige Beschränkungen
+    preset: multiple_text
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_useconstraints
+    label: Sonstige Nutzungsbeschränkungen
+    form_snippet: multiple_checkbox_lhm_2.html
+    display_snippet: multiple_choice.html
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: copyright
+      label: copyright
+    - value: patent
+      label: patent
+    - value: patentPending
+      label: patentPending
+    - value: trademark
+      label: trademark
+    - value: license
+      label: license
+    - value: intellectualPropertyRights
+      label: intellectualPropertyRights
+    - value: restricted
+      label: restricted
+    - value: otherRestrictions
+      label: otherRestrictions
+  
+  # Feld GP
+  - field_name: distrib_organisation
+    label: Metadaten Organisation
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_individual
+    label: Metadaten Ansprechpartner
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_position
+    label: Metadaten Position
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_voice
+    label: Metadaten Telefon
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_facsimile
+    label: Metadaten Fax
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_email
+    label: Metadaten E-Mail
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_online
+    label: Metadaten Homepage
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: distrib_role
+    label: Metadaten Funktion
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: resourceProvider
+    - value: custodian
+    - value: owner
+    - value: user
+    - value: distributor
+    - value: originator
+    - value: pointOfContact
+    - value: principalInvestigator
+    - value: processor
+    - value: publisher
+    - value: author  
+  
+  # Feld GP
+  - field_name: dataquality_scopedescription_dataset
+    label: Datenqualität Datensatz
+    preset: multiple_text
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: dataquality_scopedescription_other
+    label: Datenqualität andere
+    preset: multiple_text
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: ident_alternatetitle
+    label: Datenbeschreibung
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP, no values, no codelist ??
+  - field_name: quantitativeresult
+    label: Datenergebnis (quantitativ)
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: refsystem
+    label: Koordinatensysteme
+    is_info: true
+    info_text: To Do
+    form_snippet: repeating_subfields_lhm.html
+    repeating_label: Koordinatensystem
+    repeating_subfields:
+    - field_name: refsystem_code
+      label: Koordinatensystem-Identifikator
+      form_placeholder: z.b. 4326
+    - field_name: refsystem_codespace
+      label: Koordinatensystem-Codespace
+      form_placeholder: z.B. urn:ogc:def:crs:EPSG
+    - field_name: refsystem_version
+      label: Koordinatensystem-Version
+      form_placeholder: z.B. 8.1.4
+  
+  # Feld GP
+  - field_name: contact_organisation
+    label: Daten Organisation
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_individual
+    label: Daten Ansprechpartner
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_deliverypoint
+    label: Daten Straße
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_city
+    label: Daten Stadt
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_administrativearea
+    label: Daten Bundesland
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_postalcode
+    label: Daten Postleitzahl
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_country
+    label: Daten Land
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
 
 # Feld GP
-- field_name: distrib_individual
-  label: Metadaten Ansprechpartner
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_position
-  label: Metadaten Position
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_voice
-  label: Metadaten Telefon
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_facsimile
-  label: Metadaten Fax
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_email
-  label: Metadaten E-Mail
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_online
-  label: Metadaten Homepage
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: distrib_role
-  label: Metadaten Funktion
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: resourceProvider
-  - value: custodian
-  - value: owner
-  - value: user
-  - value: distributor
-  - value: originator
-  - value: pointOfContact
-  - value: principalInvestigator
-  - value: processor
-  - value: publisher
-  - value: author  
-
-# Feld GP
-- field_name: dataquality_scopedescription_dataset
-  label: Datenqualität Datensatz
-  preset: multiple_text
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: dataquality_scopedescription_other
-  label: Datenqualität andere
-  preset: multiple_text
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: ident_alternatetitle
-  label: Datenbeschreibung
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP, no values, no codelist ??
-- field_name: quantitativeresult
-  label: Datenergebnis (quantitativ)
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: a
-  - value: b
-  - value: c
-
-# Feld GP
-- field_name: refsystem
-  label: Koordinatensystem Label
-  is_info: true
-  info_text: To Do
-  form_snippet: repeating_subfields_lhm.html
-  repeating_label: Koordinatensystem Repeating-Label
-  repeating_subfields:
-  - field_name: refsystem_code
-    label: Koordinatensystem-Identifikator
-    #form_placeholder: z.b. EPSG:4326
-  - field_name: refsystem_codespace
-    label: Koordinatensystem-Codespace
-    #form_placeholder: z.B. xyz
-  - field_name: refsystem_version
-    label: Koordinatensystem-Version
-    #form_placeholder: z.B. xyz
-
-# Feld GP
-- field_name: contact_organisation
-  label: Daten Organisation
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_individual
-  label: Daten Ansprechpartner
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_deliverypoint
-  label: Daten Straße
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_city
-  label: Daten Stadt
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_administrativearea
-  label: Daten Bundesland
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_postalcode
-  label: Daten Postleitzahl
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_country
-  label: Daten Land
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_voice
-  label: Daten Telefon
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_facsimile
-  label: Daten Fax
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_email
-  label: Daten E-Mail
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_online
-  label: Daten Homepage
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: contact_role
-  label: Daten Funktion
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: resourceProvider
-  - value: custodian
-  - value: owner
-  - value: user
-  - value: distributor
-  - value: originator
-  - value: pointOfContact
-  - value: principalInvestigator
-  - value: processor
-  - value: publisher
-  - value: author 
-
-# Feld GP
-- field_name: dataquality_scopecode
-  label: Datentyp
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: attribute
-  - value: attributeType
-  - value: collectionHardware
-  - value: collectionSession
-  - value: dataset
-  - value: series
-  - value: nonGeographicDataset
-  - value: dimensionGroup
-  - value: feature
-  - value: featureType
-  - value: propertyType
-  - value: fieldSession
-  - value: software
-  - value: service
-  - value: model
-  - value: tile
-
-# Feld GP
-- field_name: distrib_format
-  label: Diensteart und Version Label
-  is_info: true
-  info_text: To Do
-  form_snippet: repeating_subfields_lhm.html
-  repeating_label: Diensteart und Version Repeating-Label
-  repeating_subfields:
-  - field_name: distrib_format_name
-    label: Diensteart
-    #form_placeholder: z.b. EPSG:4326
-  - field_name: distrib_format_version
-    label: Version
-    #form_placeholder: z.B. xyz
-
-# Feld GP
-- field_name: ident_identifier
-  label: Metadaten-Identifikator
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld Master
-- field_name: owner_org
-  label: 
-    en: Responsible organization
-    de: Organisation
-  preset: dataset_organization
-  form_snippet: organization_lhm.html
-  is_info: true
-  info_text_orga: Angabe des fachlich zuständigen Referats und der ersten, das Referat untergliedernden Organisationseinheit (z.B. Amt, Hauptabteilung, Geschäftsbereich)
-  required: true
-
-# Feld GP
-- field_name: iso_type
-  label: ISO-Typ
-  preset: select_lhm
-  # required: true
-  is_info: true
-  info_text: To Do
-  choices:
-  - value: SV_ServiceIdentification
-  - value: MD_DataIdentification
-
-# Feld GP
-- field_name: iso_standard
-  label: ISO-Standard
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld GP
-- field_name: iso_version
-  label: ISO-Version
-  form_snippet: text_lhm.html
-  # required: true
-  is_info: true
-  info_text: To Do
-
-# Feld Master
-- field_name: name
-  label: URL
-  preset: dataset_slug
-  form_placeholder: eg. my-dataset
-
-
-# Beispielfelder isodata
-
-# - field_name: harvest_source 
-#   label: harvest_source 
-
-#- field_name: guid
-#  label: GUID
-
-# - field_name: metadata-language
-#   label: metadata-language
-
-# - field_name: metadata-date
-#   label: metadata-date
-
-# - field_name: metadata-standard-name
-#   label: metadata-standard-name
-
-# - field_name: metadata-standard-version
-#   label: metadata-standard-version
-
-# - field_name: resource-type
-#   label: resource-type
-
-#  #- field_name: metadata-point-of-contact
-#  #  label: metadata-point-of-contact
-
-# - field_name: contact-email
-#   label: contact-email
-
-# - field_name: spatial-data-service-type
-#   label: spatial-data-service-type
-
-# - field_name: progress
-#   label: progress
-
-#  #- field_name: access_constraints
-#  #  label: access_constraints
- 
-#  #- field_name: responsible-party
-#  #  label: responsible-party
-
-#- field_name: spatial-reference-system
-#  label: spatial-reference-system
-
-#- field_name: spatial
-#  label: spatial
-
-# - field_name: lineage
-#   label: lineage
-
-
-resource_fields:
-
-# Feld Master
-- field_name: url
-  label: URL
-  preset: resource_url_upload
-
-# Feld Master
-- field_name: name
-  label: Name
-  form_snippet: text_lhm.html
-  is_info: true
-  info_text: Tabellenname in der Datenbank
-  #validators: scheming_required
-  required: true
-
-# Feld Master
-- field_name: description
-  label: Beschreibung
-  form_snippet: markdown_lhm.html
-  is_info: true
-  info_text: Beschreibung der Ressource, z.B. 'Tabelle im stadtweit verfügbaren Geodatenpool'. Kann auch Verwendungszweck /-möglichkeiten der Ressource enthalten.
-  #validators: scheming_required
-  required: true
-
-# Feld Master
-- field_name: format
-  label: Format
-  preset: select_lhm
-  is_info: true
-  info_text: Dateiformat der Ressource
-  #validators: scheming_required
-  required: true 
-  choices:
-  - value: oracle-db
-    label: Oracle-DB
-  - value: XLSX
-    label: XLSX
-  - value: PDF
-    label: PDF
-  - value: WCS
-    label: WCS
-  - value: WFS
-    label: WFS
-  - value: WMS
-    label: WMS
-  - value: WMTS
-    label: WMTS
-  - value: JSON
-    label: JSON
-  - value: XML/GML
-    label: XML/GML
-  - value: ArcGIS Kartenservice
-    label: ArcGIS Kartenservice
-  - value: URL
+  - field_name: contact_voice
+    label: Daten Telefon
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_facsimile
+    label: Daten Fax
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_email
+    label: Daten E-Mail
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_online
+    label: Daten Homepage
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: contact_role
+    label: Daten Funktion
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: resourceProvider
+    - value: custodian
+    - value: owner
+    - value: user
+    - value: distributor
+    - value: originator
+    - value: pointOfContact
+    - value: principalInvestigator
+    - value: processor
+    - value: publisher
+    - value: author 
+  
+  # Feld GP
+  - field_name: dataquality_scopecode
+    label: Datentyp
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: attribute
+    - value: attributeType
+    - value: collectionHardware
+    - value: collectionSession
+    - value: dataset
+    - value: series
+    - value: nonGeographicDataset
+    - value: dimensionGroup
+    - value: feature
+    - value: featureType
+    - value: propertyType
+    - value: fieldSession
+    - value: software
+    - value: service
+    - value: model
+    - value: tile
+  
+  # Feld GP
+  - field_name: distrib_format
+    label: Dienstearten und Versionen
+    is_info: true
+    info_text: To Do
+    form_snippet: repeating_subfields_lhm.html
+    repeating_label: Diensteart und Version
+    repeating_subfields:
+    - field_name: distrib_format_name
+      label: Diensteart
+      form_placeholder: z.b. WMS
+    - field_name: distrib_format_version
+      label: Version
+      form_placeholder: z.B. 1.3.0
+  
+  # Feld GP
+  - field_name: ident_identifier
+    label: Metadaten-Identifikator
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld Master
+  - field_name: owner_org
+    label: 
+      en: Responsible organization
+      de: Organisation
+    preset: dataset_organization
+    form_snippet: organization_lhm.html
+    is_info: true
+    info_text_orga: Angabe des fachlich zuständigen Referats und der ersten, das Referat untergliedernden Organisationseinheit (z.B. Amt, Hauptabteilung, Geschäftsbereich)
+    required: true
+  
+  # Feld GP
+  - field_name: iso_type
+    label: ISO-Typ
+    preset: select_lhm
+    # required: true
+    is_info: true
+    info_text: To Do
+    choices:
+    - value: ''
+    - value: SV_ServiceIdentification
+    - value: MD_DataIdentification
+  
+  # Feld GP
+  - field_name: iso_standard
+    label: ISO-Standard
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: iso_version
+    label: ISO-Version
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
+  
+  # Feld Master
+  - field_name: name
     label: URL
-  - value: Link
-    label: Link
+    preset: dataset_slug
+    form_placeholder: eg. my-dataset
+  
+  # Feld GP
+  - field_name: service_type
+    label: Service-Typ
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+  
+  # Feld GP
+  - field_name: file_identifier
+    label: Datei-Identifikator
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+  
+  
+  # Beispielfelder isodata
+  #
+  # - field_name: harvest_source 
+  #   label: harvest_source 
+  #- field_name: guid
+  #  label: GUID
+  # - field_name: metadata-language
+  #   label: metadata-language
+  # - field_name: metadata-date
+  #   label: metadata-date
+  # - field_name: metadata-standard-name
+  #   label: metadata-standard-name
+  # - field_name: metadata-standard-version
+  #   label: metadata-standard-version
+  # - field_name: resource-type
+  #   label: resource-type
+  #  #- field_name: metadata-point-of-contact
+  #  #  label: metadata-point-of-contact
+  # - field_name: contact-email
+  #   label: contact-email
+  # - field_name: spatial-data-service-type
+  #   label: spatial-data-service-type
+  # - field_name: progress
+  #   label: progress
+  #  #- field_name: access_constraints
+  #  #  label: access_constraints
+  
+  #  #- field_name: responsible-party
+  #  #  label: responsible-party
+  #- field_name: spatial-reference-system
+  #  label: spatial-reference-system
+  #- field_name: spatial
+  #  label: spatial
+  # - field_name: lineage
+  #   label: lineage
+  
+  
+  resource_fields:
 
-#- field_name: format
-#  label: Format
-#  preset: resource_format_autocomplete
-#
-#- field_name: resource_locator_function
-#  label: resource_locator_function
-#
-#- field_name: resource_locator_protocol
-#  label: resource_locator_protocol
+  - field_name: url
+    label: URL
+    preset: resource_url_upload
+  - field_name: name
+    label: Name
+    form_placeholder: 
+      en: e.g. January 2011 Gold Prices
+      de: z. B. 3D Stadtmodell
+  - field_name: description
+    label: Description
+    form_snippet: markdown.html
+    form_placeholder: Some useful notes about the data
+  - field_name: format
+    label: Format
+    preset: resource_format_autocomplete

@@ -10,7 +10,7 @@
     "kr": [],
     "kr-bewa": [],
     "kvr": [],
-    "kr-gsm": ["KR-GSM", "GeodatenService MÃ¼nchen"],
+    "kr-gsm": ["KR-GSM", "GeodatenService München"],
     "kvr-gl": [],
     "kvr-i": ["KVR - I / 312"],
     "mor": ["MOR"],
@@ -34,6 +34,7 @@
     "rku-gb-iv": ["RKU-GB-IV"],
     "s-gl": ["S-GL-SP"],
     "soz": [],
-    "sonstige": ["RAW", "Nachtergaele Freddy", "X", "KR-FV", "SWM", "GSR-GS", "S-I-BI", "LDBV", "KULT", "Name Fachreferat", "RBS-S-SP (FreizeitSport)", "RKU-IV-2131"]
+    "kult": ["KULT"],
+    "sonstige": ["RAW", "Nachtergaele Freddy", "X", "KR-FV", "SWM", "GSR-GS", "S-I-BI", "LDBV", "Name Fachreferat", "RBS-S-SP (FreizeitSport)", "RKU-IV-2131"]
 }
 
