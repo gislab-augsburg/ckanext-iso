@@ -221,8 +221,9 @@ dataset_fields:
   
   - field_name: ident_classification
     label: Anwendungsbeschränkungen
-    form_snippet: multiple_checkbox_lhm_2.html
-    display_snippet: multiple_choice.html
+    #form_snippet: multiple_checkbox_lhm_2.html
+    #display_snippet: multiple_choice.html
+    preset: multiple_select
     # required: true
     is_info: true
     info_text: To Do
@@ -241,8 +242,9 @@ dataset_fields:
   # Feld GP
   - field_name: ident_accessconstraints
     label: Zugriffsbeschränkungen
-    form_snippet: multiple_checkbox_lhm_2.html
-    display_snippet: multiple_choice.html
+    #form_snippet: multiple_checkbox_lhm_2.html
+    #display_snippet: multiple_choice.html
+    preset: multiple_select
     # required: true
     is_info: true
     info_text: To Do
@@ -283,8 +285,9 @@ dataset_fields:
   # Feld GP
   - field_name: ident_useconstraints
     label: Sonstige Nutzungsbeschränkungen
-    form_snippet: multiple_checkbox_lhm_2.html
-    display_snippet: multiple_choice.html
+    #form_snippet: multiple_checkbox_lhm_2.html
+    #display_snippet: multiple_choice.html
+    preset: multiple_select
     # required: true
     is_info: true
     info_text: To Do

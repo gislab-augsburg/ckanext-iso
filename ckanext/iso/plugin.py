@@ -144,6 +144,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             distrib_facsimile = f'{distributor}/{distrib_party}/{phone}/{gmd}facsimile/{gco}CharacterString'
             dataquality_scopedescription_dataset = f'{data_quality}/{gmd}scope/{gmd}DQ_Scope/{gmd}levelDescription/{gmd}MD_ScopeDescription/{gmd}dataset/{gco}CharacterString'
             dataquality_scopedescription_other = f'{data_quality}/{gmd}scope/{gmd}DQ_Scope/{gmd}levelDescription/{gmd}MD_ScopeDescription/{gmd}other/{gco}CharacterString'
+            ident_alternatetitle = f'{service_ident}/{gmd}citation/{gmd}CI_Citation/{gmd}alternateTitle/{gco}CharacterString'
             quantitativeresult = f'{data_quality}/{gmd}report/{gmd}DQ_QuantitativeAttributeAccuracy/{gmd}result/{gmd}DQ_QuantitativeResult/{gmd}value/{gco}Record/{gco}Integer'
             refsystem_code = f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}code/{gco}CharacterString'
             refsystem_codespace =f'./{gmd}referenceSystemInfo/{gmd}MD_ReferenceSystem/{gmd}referenceSystemIdentifier/{gmd}RS_Identifier/{gmd}codeSpace/{gco}CharacterString'
@@ -336,11 +337,14 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             xml_paths.append(dataquality_scopedescription_other)
             xml_names.append('dataquality_scopedescription_other')
 
-            try:
-                package_dict['ident_alternatetitle'] = iso_values["alternate-title"]
-            except:
-                package_dict['ident_alternatetitle'] = ''
-                print(f'MB_MISSING ident_alternatetitle at {guid}')
+            # package_dict['ident_alternatetitle']
+            xml_paths.append(ident_alternatetitle)
+            xml_names.append('ident_alternatetitle')
+            #try:
+            #    package_dict['ident_alternatetitle'] = iso_values["alternate-title"]
+            #except:
+            #    package_dict['ident_alternatetitle'] = ''
+            #    print(f'MB_MISSING ident_alternatetitle at {guid}')
 
             # package_dict['quantitativeresult']
             xml_paths.append(quantitativeresult)
