@@ -649,6 +649,13 @@ dataset_fields:
     form_snippet: text_lhm.html
     is_info: true
     info_text: To Do
+
+  # Feld GP
+  - field_name: hierarchylevel_scopecode
+    label: Hierachielevel Scopecode
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
   
   
   # Beispielfelder isodata

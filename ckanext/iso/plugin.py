@@ -193,7 +193,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 package_dict['ident_topic'] = iso_values["topic-category"][0]
             except:
                 package_dict['ident_topic'] = ''
-                print(f'MB_MISSING ident_datetype at {guid}')
+                print(f'MB_MISSING ident_topic at {guid}')
 
             try:
                 package_dict['ident_datetype'] = iso_values["dataset-reference-date"][0]["type"]  # Multi needed? If yes Repeating subfields with ident_date_
@@ -454,6 +454,13 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 package_dict['file_identifier'] = ''
                 print(f'MB_MISSING guid at {iso_values}')
 
+            # package_dict['file_identifier']
+            try:
+                package_dict['hierarchylevel_scopecode'] = iso_values["resource-type"]
+            except:
+                package_dict['hierarchylevel_scopecode'] = ''
+                print(f'MB_MISSING hierarchylevel_scopecode at {iso_values}')
+
             # Get Values from xml-tree
             i = 0
             for path in xml_paths:
@@ -486,9 +493,11 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 if len(check_multi) > 1:
                     vals = []
                     for val in check_multi:  
-                        if not type(check.text) == str:
+                        #if not type(check.text) == str:
+                        if not type(val.text) == str:
                             try:
-                                value = check.attrib['codeListValue']
+                                #value = check.attrib['codeListValue']
+                                value = val.attrib['codeListValue']
                                 vals.append(value)
                             except:
                                 value = ''
@@ -497,21 +506,41 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                             vals.append(val.text)
                     #value = str(vals)
                     value = vals
+                    print(f'MB_Debug_02: {guid} - {name}:')
+                    print(value)
+
+                # Check evtl. for nilReason here with something like:
+                # # Extract the value of gco:nilReason
+                # nil_value = check.get(f"{gco}nilReason")
+                # # Reconstruct your desired side_value string
+                # if nil_value:
+                #     side_value = f'gco:nilReason="{nil_value}"'
+                # else:
+                #     side_value = None
 
                 package_dict[name] = value
 
             # Handle list of dicts for Repeating subfields
+            # PatchMB_01
             refsystem_list = []
             k = 0
             try:
                 if 'refsystem_code' in package_dict.keys() and type(package_dict['refsystem_code']) == list:
                     for ref_code in package_dict['refsystem_code']:
-                        ref_codespace = package_dict['refsystem_codespace'][k]
-                        ref_version = package_dict['refsystem_version'][k]
+                        try:
+                            ref_codespace = package_dict['refsystem_codespace'][k]
+                        except:
+                            ref_codespace = ''
+                        try:
+                            ref_version = package_dict['refsystem_version'][k]
+                        except:
+                            ref_version = ''
                         k = k + 1
-                        refsystem_list.append({"refsystem_code": ref_code, "refsystem_codespace": ref_codespace, "refsystem_version": ref_version })
+                        refsystem_list.append({"refsystem_code": ref_code, "refsystem_codespace": ref_codespace, "refsystem_version": ref_version})
+                elif 'refsystem_code' in package_dict.keys() and type(package_dict['refsystem_code']) != list:
+                    refsystem_list.append({"refsystem_code": package_dict['refsystem_code'], "refsystem_codespace": package_dict['refsystem_codespace'], "refsystem_version": package_dict['refsystem_version']})
             except:
-                print(f'MB_MISSING refsystem list at {guid} is not a list')
+                print(f'MB_MISSING refsystem at {guid} is missing')
             package_dict["refsystem"] = refsystem_list
         
                 
