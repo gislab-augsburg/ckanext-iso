@@ -128,6 +128,8 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             distrib_party = f'{gmd}distributorContact/{gmd}CI_ResponsibleParty'
             contact = f'./{gmd}contact/{gmd}CI_ResponsibleParty'
             data_quality = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality'
+            bbox_service = f'./{gmd}identificationInfo/{srv}SV_ServiceIdentification/{srv}:extent'
+            bbox_data = f'./{gmd}identificationInfo/{gmd}MD_DataIdentification/{gmd}extent'
             
             # Needed paths
             ident_deliverypoint = f'{service_ident}/{respons_party}/{adress}/{gmd}deliveryPoint/{gco}CharacterString'
@@ -164,6 +166,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             dataquality_scopecode = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality/{gmd}scope/{gmd}DQ_Scope/{gmd}level/{gmd}MD_ScopeCode'
             ident_identifier = f'{service_ident}/{gmd}citation/{gmd}CI_Citation/{gmd}identifier/{gmd}MD_Identifier/{gmd}code/{gco}CharacterString'
             service_type = f'{service_ident}/{srv}serviceType/{gco}LocalName'
+            bbox_east = f'{bbox_service}/{gmd}EX_Extent/{gmd}geographicElement/{gmd}EX_GeographicBoundingBox/{gmd}eastBoundLongitude/{gco}Decimal'
+            bbox_north = f'{bbox_service}/{gmd}EX_Extent/{gmd}geographicElement/{gmd}EX_GeographicBoundingBox/{gmd}northBoundLatitude/{gco}Decimal'
+            bbox_south = f'{bbox_service}/{gmd}EX_Extent/{gmd}geographicElement/{gmd}EX_GeographicBoundingBox/{gmd}southBoundLatitude/{gco}Decimal'
+            bbox_west = f'{bbox_service}/{gmd}EX_Extent/{gmd}geographicElement/{gmd}EX_GeographicBoundingBox/{gmd}westBoundLongitude/{gco}Decimal'
 
             # Get iso_type
             if len(root.findall(f".//{gmd}MD_DataIdentification")) == 1:
@@ -458,12 +464,28 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 package_dict['file_identifier'] = ''
                 print(f'MB_MISSING guid at {iso_values}')
 
-            # package_dict['file_identifier']
+            # package_dict['hierarchylevel_scopecode']
             try:
                 package_dict['hierarchylevel_scopecode'] = iso_values["resource-type"]
             except:
                 package_dict['hierarchylevel_scopecode'] = ''
                 print(f'MB_MISSING hierarchylevel_scopecode at {iso_values}')
+
+            # package_dict['bbox_east']
+            xml_paths.append(bbox_east)
+            xml_names.append('bbox_east')
+
+            # package_dict['bbox_north']
+            xml_paths.append(bbox_north)
+            xml_names.append('bbox_north')
+
+            # package_dict['bbox_south']
+            xml_paths.append(bbox_south)
+            xml_names.append('bbox_south')
+
+            # package_dict['bbox_west']
+            xml_paths.append(bbox_west)
+            xml_names.append('bbox_west')
 
             # Get Values from xml-tree
             i = 0
@@ -473,6 +495,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 if service_ident in path:
                     if package_dict['iso_type'] == 'MD_DataIdentification':
                         path = path.replace(service_ident, data_ident)
+                        path = path.replace(bbox_service, bbox_data)
                         
                 check = root.find(path)
                 # Get name

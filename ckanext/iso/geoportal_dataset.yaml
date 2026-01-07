@@ -653,6 +653,34 @@ dataset_fields:
     is_info: true
     info_text: To Do
 
+    # Feld GP
+  - field_name: bbox_east
+    label: Bounding Box Ost
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+
+  # Feld GP
+  - field_name: bbox_north
+    label: Bounding Box Nord
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+
+  # Feld GP
+  - field_name: bbox_south
+    label: Bounding Box Süd
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+
+  # Feld GP
+  - field_name: bbox_west
+    label: Bounding Box West
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+
   # Feld GP
   - field_name: hierarchylevel_scopecode
     label: Hierachielevel Scopecode
