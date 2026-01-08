@@ -6,7 +6,7 @@ import ckan.plugins.toolkit as toolkit
 import os
 from lxml import etree
 import json
-from nilreason_extractor import extract_nilreasons
+from ckanext.iso.nilreason_extractor import extract_nilreasons
 
 
 class LHM_GP_Harvester(p.SingletonPlugin):
