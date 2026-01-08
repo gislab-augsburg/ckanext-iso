@@ -6,6 +6,7 @@ import ckan.plugins.toolkit as toolkit
 import os
 from lxml import etree
 import json
+from nilreason_extractor import extract_nilreasons
 
 
 class LHM_GP_Harvester(p.SingletonPlugin):
@@ -486,6 +487,19 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             # package_dict['bbox_west']
             xml_paths.append(bbox_west)
             xml_names.append('bbox_west')
+
+            # package_dict['nil_reason']
+            try:
+                rows = extract_nilreasons(xml_tree)
+                package_dict['nil_reason'] = []
+                for r in rows:
+                    if r["related_value"] == '':
+                        r["related_value"] = 'None'
+                    package_dict['nil_reason'].append(r["label"] + ";  nilReason:" + r["nilReason"] + ";  value:" + r["related_value"] + ";  " + r["field_name"] + ";  " + r["nilreason_xpath"])
+            except:
+                package_dict['nil_reason'] = []
+                print(f'MB_MISSING nil_reason at {iso_values}')
+                 
 
             # Get Values from xml-tree
             i = 0

@@ -687,7 +687,14 @@ dataset_fields:
     form_snippet: text_lhm.html
     is_info: true
     info_text: To Do
-  
+
+  # Feld GP
+  - field_name: nil_reason
+    label: NilReason
+    preset: multiple_text
+    is_info: true
+    info_text: To Do
+
   
   # Beispielfelder isodata
   #
