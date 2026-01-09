@@ -129,7 +129,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             distrib_party = f'{gmd}distributorContact/{gmd}CI_ResponsibleParty'
             contact = f'./{gmd}contact/{gmd}CI_ResponsibleParty'
             data_quality = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality'
-            bbox_service = f'./{gmd}identificationInfo/{srv}SV_ServiceIdentification/{srv}:extent'
+            bbox_service = f'./{gmd}identificationInfo/{srv}SV_ServiceIdentification/{srv}extent'
             bbox_data = f'./{gmd}identificationInfo/{gmd}MD_DataIdentification/{gmd}extent'
             
             # Needed paths
@@ -470,7 +470,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 package_dict['hierarchylevel_scopecode'] = iso_values["resource-type"]
             except:
                 package_dict['hierarchylevel_scopecode'] = ''
-                print(f'MB_MISSING hierarchylevel_scopecode at {iso_values}')
+                print(f'MB_MISSING hierarchylevel_scopecode at {guid}')
 
             # package_dict['bbox_east']
             xml_paths.append(bbox_east)
@@ -498,7 +498,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                     package_dict['nil_reason'].append(r["label"] + ";  nilReason:" + r["nilReason"] + ";  value:" + r["related_value"] + ";  " + r["field_name"] + ";  " + r["nilreason_xpath"])
             except:
                 package_dict['nil_reason'] = []
-                print(f'MB_MISSING nil_reason at {iso_values}')
+                print(f'MB_MISSING nil_reason at {guid}')
                  
 
             # Get Values from xml-tree
