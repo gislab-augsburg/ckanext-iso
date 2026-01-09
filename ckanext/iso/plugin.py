@@ -467,7 +467,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
 
             # package_dict['hierarchylevel_scopecode']
             try:
-                package_dict['hierarchylevel_scopecode'] = iso_values["resource-type"]
+                package_dict['hierarchylevel_scopecode'] = iso_values["resource-type"][0]
             except:
                 package_dict['hierarchylevel_scopecode'] = ''
                 print(f'MB_MISSING hierarchylevel_scopecode at {guid}')
