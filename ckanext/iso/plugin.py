@@ -277,7 +277,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             try:
                 package_dict['ident_accessconstraints'] = iso_values["access-constraints"]
             except:
-                package_dict['ident_accessconstraints'] = ''
+                package_dict['ident_accessconstraints'] = []
                 print(f'MB_MISSING ident_accessconstraints at {guid}')
 
             # package_dict['ident_uselimitation']
@@ -517,7 +517,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 i = i + 1
                 if isinstance(check, type(None)):
                     # Path does not exist in XML
-                    value = ''
+                    if name in ['ident_classification', 'ident_useconstraints']:
+                        value = []
+                    else:
+                        value = ''
                 else:
                     if not type(check.text) == str:
                         try:
@@ -525,7 +528,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                         except:
                             # XML-Pfad existing, content empty (e.g. <gmd:URL />), so no to is-string (value:None) even if it would be if filled
                             # --> fill with '' instead of None to be writable in csv
-                            value = ''
+                            if name in ['ident_classification', 'ident_useconstraints']:
+                                value = []
+                            else:
+                                value = ''
                     else:
                         value = check.text
 
@@ -539,12 +545,14 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                             try:
                                 #value = check.attrib['codeListValue']
                                 value = val.attrib['codeListValue']
-                                vals.append(value)
+                                if value not in vals:
+                                    vals.append(value)
                             except:
                                 value = ''
                         else:
                             #print(val.text)
-                            vals.append(val.text)
+                            if val.text not in vals:
+                                vals.append(val.text)
                     #value = str(vals)
                     value = vals
                     print(f'MB_Debug_02: {guid} - {name}:')
