@@ -164,6 +164,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             contact_email = f'{contact}/{adress}/{gmd}electronicMailAddress/{gco}CharacterString'
             contact_online = f'{contact}/{online}/{gmd}linkage/{gmd}URL'
             contact_role = f'{contact}/{gmd}role/{gmd}CI_RoleCode'
+            date_stamp = f'./{gmd}dateStamp/{gco}DateTime'
             dataquality_scopecode = f'./{gmd}dataQualityInfo/{gmd}DQ_DataQuality/{gmd}scope/{gmd}DQ_Scope/{gmd}level/{gmd}MD_ScopeCode'
             ident_identifier = f'{service_ident}/{gmd}citation/{gmd}CI_Citation/{gmd}identifier/{gmd}MD_Identifier/{gmd}code/{gco}CharacterString'
             service_type = f'{service_ident}/{srv}serviceType/{gco}LocalName'
@@ -402,6 +403,8 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             # package_dict['contact_role']
             xml_paths.append(contact_role)
             xml_names.append('contact_role')
+            xml_paths.append(date_stamp)
+            xml_names.append('date_stamp')
             # package_dict['dataquality_scopecode']
             xml_paths.append(dataquality_scopecode)
             xml_names.append('dataquality_scopecode')

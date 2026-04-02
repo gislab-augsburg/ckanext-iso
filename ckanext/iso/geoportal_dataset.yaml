@@ -543,7 +543,15 @@ dataset_fields:
     - value: principalInvestigator
     - value: processor
     - value: publisher
-    - value: author 
+    - value: author
+
+  # Feld GP
+  - field_name: date_stamp
+    label: Datumsstempel
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: To Do
   
   # Feld GP
   - field_name: dataquality_scopecode
@@ -596,9 +604,7 @@ dataset_fields:
   
   # Feld Master
   - field_name: owner_org
-    label: 
-      en: Responsible organization
-      de: Organisation
+    label: Organisation
     preset: dataset_organization
     form_snippet: organization_lhm.html
     is_info: true
