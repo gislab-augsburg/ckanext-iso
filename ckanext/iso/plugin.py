@@ -638,7 +638,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
         f = open(filepath_config)
         data = json.load(f)
         # Use 'Sonstige' if not matching
-        package_dict['owner_org'] = 'sonstige'
+        package_dict['owner_org'] = 'geoportal'
         for orga, iso_orgas in data.items():
             #print('--------------')
             #print(orga, str(iso_orgas), f"'{package_dict['ident_individual']}'", package_dict['name'])
@@ -647,7 +647,7 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                 package_dict['owner_org'] = orga
                 break
             else:
-                package_dict['owner_org'] = 'sonstige'
+                package_dict['owner_org'] = 'geoportal'
             #print('--------------')
 
         # Write files for Schema Mapping II
