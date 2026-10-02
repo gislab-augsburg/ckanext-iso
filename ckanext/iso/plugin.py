@@ -591,6 +591,10 @@ class LHM_GP_Harvester(p.SingletonPlugin):
             except:
                 print(f'MB_MISSING refsystem at {guid} is missing')
             package_dict["refsystem"] = refsystem_list
+
+            
+            # Set static owner_org, no more mapping on LHM Abteilungen
+            package_dict['owner_org'] = 'geoportal'
         
                 
             
@@ -625,30 +629,30 @@ class LHM_GP_Harvester(p.SingletonPlugin):
                     del package_dict['extras'][package_dict['extras'].index(item)]
             
 
-        # Mapping organisations
-        '''
-        # Example implementation for defining mapping_orgas path in ckan .ini file:
-        filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
-        print('filepath_config')
-        print(filepath_config)
-        # Example implementation with hardcoded path value:
-        filepath = '/usr/local/lib/python3.8/dist-packages/ckanext/iso/mapping_orgas.json'
-        '''
-        filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
-        f = open(filepath_config)
-        data = json.load(f)
-        # Use 'Sonstige' if not matching
-        package_dict['owner_org'] = 'geoportal'
-        for orga, iso_orgas in data.items():
-            #print('--------------')
-            #print(orga, str(iso_orgas), f"'{package_dict['ident_individual']}'", package_dict['name'])
-            if package_dict['ident_individual'] in iso_orgas:
-                #print('FOUND :)')
-                package_dict['owner_org'] = orga
-                break
-            else:
-                package_dict['owner_org'] = 'geoportal'
-            #print('--------------')
+#        # Mapping organisations, deprecated
+#        '''
+#        # Example implementation for defining mapping_orgas path in ckan .ini file:
+#        filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
+#        print('filepath_config')
+#        print(filepath_config)
+#        # Example implementation with hardcoded path value:
+#        filepath = '/usr/local/lib/python3.8/dist-packages/ckanext/iso/mapping_orgas.json'
+#        '''
+#        filepath_config = toolkit.config.get("ckanext.iso.mapping_orgas")
+#        f = open(filepath_config)
+#        data = json.load(f)
+#        # Use 'Sonstige' if not matching
+#        package_dict['owner_org'] = 'geoportal'
+#        for orga, iso_orgas in data.items():
+#            #print('--------------')
+#            #print(orga, str(iso_orgas), f"'{package_dict['ident_individual']}'", package_dict['name'])
+#            if package_dict['ident_individual'] in iso_orgas:
+#                #print('FOUND :)')
+#                package_dict['owner_org'] = orga
+#                break
+#            else:
+#                package_dict['owner_org'] = 'geoportal'
+#            #print('--------------')
 
         # Write files for Schema Mapping II
         tree = etree.ElementTree(xml_tree)
@@ -731,7 +735,7 @@ class TestValidator(BaseValidator):
         for title, xpath in cls._elements:
             element = xml.xpath(xpath, namespaces={'gmd': 'http://www.isotc211.org/2005/gmd', 'gco': 'http://www.isotc211.org/2005/gco'})
             if len(element) == 0 or not element[0].text:
-                errors.append(('Element not found: {0}'.format(title), None))
+                errors.append(('TEST VALIDATION: Element not found: {0}'.format(title), None))
             else:
                 print(f'Dataset passed validation for {title}, value is {element[0].text}')
         for title, xpath in cls._check_name:
@@ -757,7 +761,7 @@ class TestValidator(BaseValidator):
             #print('----------------------')
             if len(element) != 0:
                 if 'LHM' not in element[0].text and 'Landeshauptstadt München' not in element[0].text:
-                    errors.append(('Value of element Daten Organisation (contact_organisation) does not include "LHM" or "Landeshauptstadt München", it is "{0}"'.format(element[0].text), None))
+                    errors.append(('TEST VALIDATION: Value of element Daten Organisation (contact_organisation) does not include "LHM" or "Landeshauptstadt München", it is "{0}"'.format(element[0].text), None))
         if len(errors):
             return False, errors
         return True, []
