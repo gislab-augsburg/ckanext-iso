@@ -12,6 +12,20 @@ from ckanext.iso.nilreason_extractor import extract_nilreasons
 class LHM_GP_Harvester(p.SingletonPlugin):
 
     p.implements(ISpatialHarvester, inherit=True)
+    p.implements(p.IPackageController, inherit=True)
+
+    def after_create(self, context, pkg_dict):
+        _sync_geoportal_identifiers(context, pkg_dict)
+
+    def after_update(self, context, pkg_dict):
+        _sync_geoportal_identifiers(context, pkg_dict)
+
+    # CKAN 2.10+ uses these names for the same package hooks.
+    def after_dataset_create(self, context, pkg_dict):
+        _sync_geoportal_identifiers(context, pkg_dict)
+
+    def after_dataset_update(self, context, pkg_dict):
+        _sync_geoportal_identifiers(context, pkg_dict)
 
     def get_package_dict(self, context, data_dict):
 
@@ -768,6 +782,38 @@ class TestValidator(BaseValidator):
 
 
 # Helper Functions
+
+def _sync_geoportal_identifiers(context, pkg_dict):
+    """Persist the CKAN ID in geoportal metadata after CKAN has assigned it."""
+    if context.get('_iso_syncing_identifiers') or not pkg_dict.get('id'):
+        return
+
+    action_context = context.copy()
+    action_context.pop('schema', None)
+    action_context['ignore_auth'] = True
+    action_context['defer_commit'] = True
+    action_context['use_cache'] = False
+
+    # Read the saved value: package_patch and package_update can provide
+    # different subsets of fields to the hook.
+    current = toolkit.get_action('package_show')(action_context, {'id': pkg_dict['id']})
+    owner_org = current.get('owner_org')
+    organization = context['model'].Group.get(owner_org) if owner_org else None
+    if not organization or organization.name != 'geoportal':
+        return
+
+    changes = {'id': pkg_dict['id']}
+    if current.get('ident_identifier') != pkg_dict['id']:
+        changes['ident_identifier'] = pkg_dict['id']
+    if not current.get('file_identifier') or not current['file_identifier'].strip():
+        changes['file_identifier'] = pkg_dict['id']
+
+    if len(changes) == 1:
+        return
+
+    action_context['_iso_syncing_identifiers'] = True
+    toolkit.get_action('package_patch')(action_context, changes)
+
 
 def _get_object_extra(harvest_object, key):
     '''
