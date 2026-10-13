@@ -3,29 +3,82 @@ from ckanext.spatial.interfaces import ISpatialHarvester
 from ckanext.spatial.validation.validation import BaseValidator
 import ckanext.spatial.harvesters.base as base
 import ckan.plugins.toolkit as toolkit
+import ckan.lib.plugins as lib_plugins
 import os
 from lxml import etree
 import json
+import uuid
 from ckanext.iso.nilreason_extractor import extract_nilreasons
+
+
+def _set_geoportal_identifiers(data_dict, package_id):
+    data_dict['ident_identifier'] = package_id
+    file_identifier = data_dict.get('file_identifier')
+    if not file_identifier or not str(file_identifier).strip():
+        data_dict['file_identifier'] = package_id
+
+
+@toolkit.chained_action
+def package_create(original_action, context, data_dict):
+    if data_dict.get('type') != 'geoportal':
+        return original_action(context, data_dict)
+
+    # Match CKAN's rule for caller-supplied IDs; harvesting supplies its own
+    # schema, while regular non-admin requests receive a generated UUID.
+    supplied_id_allowed = (
+        context.get('schema') is not None or
+        context.get('ignore_auth') or
+        getattr(context.get('auth_user_obj'), 'sysadmin', False)
+    )
+    package_id = (data_dict.get('id') if supplied_id_allowed else None)
+    package_id = package_id or str(uuid.uuid4())
+    data_dict['id'] = package_id
+    _set_geoportal_identifiers(data_dict, package_id)
+
+    # CKAN's default create schema accepts caller-supplied IDs only for
+    # sysadmins. Allow the generated ID for regular GUI users too, while
+    # retaining CKAN's check for an ID that already exists.
+    original_schema = context.get('schema')
+    schema = (original_schema or
+              lib_plugins.lookup_package_plugin('geoportal').create_package_schema()).copy()
+    schema['id'] = [
+        toolkit.get_validator('ignore_missing'),
+        toolkit.get_validator('unicode_safe'),
+        toolkit.get_validator('package_id_does_not_exist'),
+    ]
+    context['schema'] = schema
+    try:
+        return original_action(context, data_dict)
+    finally:
+        if original_schema is None:
+            context.pop('schema', None)
+        else:
+            context['schema'] = original_schema
+
+
+@toolkit.chained_action
+def package_update(original_action, context, data_dict):
+    name_or_id = data_dict.get('id') or data_dict.get('name')
+    package = context['model'].Package.get(name_or_id) if name_or_id else None
+    if package is not None and package.type == 'geoportal':
+        if 'file_identifier' not in data_dict:
+            existing_file_identifier = package.extras.get('file_identifier')
+            if existing_file_identifier:
+                data_dict['file_identifier'] = existing_file_identifier
+        _set_geoportal_identifiers(data_dict, package.id)
+    return original_action(context, data_dict)
 
 
 class LHM_GP_Harvester(p.SingletonPlugin):
 
     p.implements(ISpatialHarvester, inherit=True)
-    p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IActions)
 
-    def after_create(self, context, pkg_dict):
-        _sync_geoportal_identifiers(context, pkg_dict)
-
-    def after_update(self, context, pkg_dict):
-        _sync_geoportal_identifiers(context, pkg_dict)
-
-    # CKAN 2.10+ uses these names for the same package hooks.
-    def after_dataset_create(self, context, pkg_dict):
-        _sync_geoportal_identifiers(context, pkg_dict)
-
-    def after_dataset_update(self, context, pkg_dict):
-        _sync_geoportal_identifiers(context, pkg_dict)
+    def get_actions(self):
+        return {
+            'package_create': package_create,
+            'package_update': package_update,
+        }
 
     def get_package_dict(self, context, data_dict):
 
@@ -782,38 +835,6 @@ class TestValidator(BaseValidator):
 
 
 # Helper Functions
-
-def _sync_geoportal_identifiers(context, pkg_dict):
-    """Persist the CKAN ID in geoportal metadata after CKAN has assigned it."""
-    if context.get('_iso_syncing_identifiers') or not pkg_dict.get('id'):
-        return
-
-    action_context = context.copy()
-    action_context.pop('schema', None)
-    action_context['ignore_auth'] = True
-    action_context['defer_commit'] = True
-    action_context['use_cache'] = False
-
-    # Read the saved value: package_patch and package_update can provide
-    # different subsets of fields to the hook.
-    current = toolkit.get_action('package_show')(action_context, {'id': pkg_dict['id']})
-    owner_org = current.get('owner_org')
-    organization = context['model'].Group.get(owner_org) if owner_org else None
-    if not organization or organization.name != 'geoportal':
-        return
-
-    changes = {'id': pkg_dict['id']}
-    if current.get('ident_identifier') != pkg_dict['id']:
-        changes['ident_identifier'] = pkg_dict['id']
-    if not current.get('file_identifier') or not current['file_identifier'].strip():
-        changes['file_identifier'] = pkg_dict['id']
-
-    if len(changes) == 1:
-        return
-
-    action_context['_iso_syncing_identifiers'] = True
-    toolkit.get_action('package_patch')(action_context, changes)
-
 
 def _get_object_extra(harvest_object, key):
     '''
