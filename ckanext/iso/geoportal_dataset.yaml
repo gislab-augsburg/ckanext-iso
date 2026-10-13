@@ -2,7 +2,7 @@ scheming_version: 2
 dataset_type: geoportal
 about: The default Munich(LHM) catalog dataset schema for Iso19115 / Iso 19139 metadata from GeoPortal
 about_url: http://github.com/ckan/ckanext-scheming
-  
+
 dataset_fields:
 
   # Feld Master
@@ -14,7 +14,13 @@ dataset_fields:
     is_info: true
     info_text: 'Thema | NAME_DER_TABELLE. Der Titel beteht aus dem Thema (für Geodatenpool: ehemals Datenbestand) und dem Namen der Tabelle in der Datenbank.'
     required: true
-  
+
+    # Feld Master
+  - field_name: name
+    label: URL
+    preset: dataset_slug
+    form_placeholder: eg. my-dataset
+
   # Feld Master
   - field_name: notes
     label: Beschreibung
@@ -30,9 +36,9 @@ dataset_fields:
     preset: dataset_organization
     form_snippet: organization_lhm.html
     is_info: true
-    info_text_orga: Angabe des fachlich zuständigen Referats und der ersten, das Referat untergliedernden Organisationseinheit (z.B. Amt, Hauptabteilung, Geschäftsbereich)
+    info_text_orga: Angabe der CKAN-Organisation = LHM-Datenquelle
     required: true
-  
+
   # Feld Master
   - field_name: tag_string
     label: Schlagworte
@@ -40,8 +46,8 @@ dataset_fields:
     form_snippet: text_lhm.html
     form_placeholder: z.B. Gesundheit; Umwelt;
     is_info: true
-    info_text: Schlagworte sind i.d.R. Substantive zur inhaltlichen Beschreibung des Datensatzes. Es können mehrere Schlagworte vergeben werden. 
-  
+    info_text: Schlagworte sind i.d.R. Substantive zur inhaltlichen Beschreibung des Datensatzes. Es können mehrere Schlagworte vergeben werden.
+
   # Feld GP
   - field_name: ident_individual
     label: Abteilung / Unterabteilung
@@ -49,7 +55,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: 'MDK Feld: ident_individual, pdf_nr: 2, geonetwork_nr: 8'
-  
+
   # Feld GP
   - field_name: ident_topic
     label: Thematik
@@ -78,7 +84,7 @@ dataset_fields:
     - value: structure
     - value: transportation
     - value: utilitiesCommunication
-  
+
   # Feld GP
   - field_name: ident_datetype
     label: Datumsart
@@ -95,7 +101,7 @@ dataset_fields:
       label: publication
     - value: revision
       label: revision
-  
+
   # Feld GP
   - field_name: ident_date_
     label: Datum
@@ -103,7 +109,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_maintenancefrequency
     label: Aktualisierungsintervall
@@ -125,7 +131,7 @@ dataset_fields:
     - value: irregular
     - value: notPlanned
     - value: unknown
-  
+
   # Feld GP
   - field_name: ident_organisation
     label: Vertrieb Organisation
@@ -133,7 +139,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_deliverypoint
     label: Vertrieb Straße
@@ -141,7 +147,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_city
     label: Vertrieb Stadt
@@ -149,7 +155,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_administrativearea
     label: Vertrieb Bundesland
@@ -157,7 +163,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_postalcode
     label: Vertrieb Postleitzahl
@@ -165,7 +171,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_country
     label: Vertrieb Land
@@ -173,7 +179,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP, multiple?
   - field_name: ident_voice
     label: Vertrieb Telefon
@@ -182,7 +188,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_facsimile
     label: Vertrieb Fax
@@ -190,7 +196,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_email
     label: Vertrieb E-Mail
@@ -198,7 +204,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_online
     label: Vertrieb Homepage
@@ -206,7 +212,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_role
     label: Vertrieb Funktion
@@ -227,7 +233,7 @@ dataset_fields:
     - value: processor
     - value: publisher
     - value: author
-  
+
   - field_name: ident_classification
     label: Anwendungsbeschränkungen
     #form_snippet: multiple_checkbox_lhm_2.html
@@ -237,6 +243,8 @@ dataset_fields:
     is_info: true
     info_text: To Do
     choices:
+    - value: ''
+      label: ''
     - value: unclassified
       label: unclassified
     - value: restricted
@@ -247,7 +255,7 @@ dataset_fields:
       label: secret
     - value: topSecret
       label: topSecret
-  
+
   # Feld GP
   - field_name: ident_accessconstraints
     label: Zugriffsbeschränkungen
@@ -258,6 +266,8 @@ dataset_fields:
     is_info: true
     info_text: To Do
     choices:
+    - value: ''
+      label: ''
     - value: copyright
       label: copyright
     - value: patent
@@ -274,7 +284,7 @@ dataset_fields:
       label: restricted
     - value: otherRestrictions
       label: otherRestrictions
-  
+
   # Feld GP
   - field_name: ident_uselimitation
     label: Nutzungsbeschränkungen
@@ -282,7 +292,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_otherconstraints
     label: Sonstige Beschränkungen
@@ -290,7 +300,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_useconstraints
     label: Sonstige Nutzungsbeschränkungen
@@ -301,6 +311,8 @@ dataset_fields:
     is_info: true
     info_text: To Do
     choices:
+    - value: ''
+      label: ''
     - value: copyright
       label: copyright
     - value: patent
@@ -317,7 +329,7 @@ dataset_fields:
       label: restricted
     - value: otherRestrictions
       label: otherRestrictions
-  
+
   # Feld GP
   - field_name: distrib_organisation
     label: Metadaten Organisation
@@ -325,7 +337,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_individual
     label: Metadaten Ansprechpartner
@@ -333,7 +345,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_position
     label: Metadaten Position
@@ -341,7 +353,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_voice
     label: Metadaten Telefon
@@ -349,7 +361,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_facsimile
     label: Metadaten Fax
@@ -357,7 +369,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_email
     label: Metadaten E-Mail
@@ -365,7 +377,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_online
     label: Metadaten Homepage
@@ -373,7 +385,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: distrib_role
     label: Metadaten Funktion
@@ -393,8 +405,8 @@ dataset_fields:
     - value: principalInvestigator
     - value: processor
     - value: publisher
-    - value: author  
-  
+    - value: author
+
   # Feld GP
   - field_name: dataquality_scopedescription_dataset
     label: Datenqualität Datensatz
@@ -402,7 +414,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: dataquality_scopedescription_other
     label: Datenqualität andere
@@ -410,7 +422,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: ident_alternatetitle
     label: Datenbeschreibung
@@ -418,7 +430,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP, no values, no codelist ??
   - field_name: quantitativeresult
     label: Datenergebnis (quantitativ)
@@ -426,7 +438,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: refsystem
     label: Koordinatensysteme
@@ -444,7 +456,7 @@ dataset_fields:
     - field_name: refsystem_version
       label: Koordinatensystem-Version
       form_placeholder: z.B. 8.1.4
-  
+
   # Feld GP
   - field_name: contact_organisation
     label: Daten Organisation
@@ -452,7 +464,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_individual
     label: Daten Ansprechpartner
@@ -460,7 +472,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_deliverypoint
     label: Daten Straße
@@ -468,7 +480,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_city
     label: Daten Stadt
@@ -476,7 +488,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_administrativearea
     label: Daten Bundesland
@@ -484,7 +496,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_postalcode
     label: Daten Postleitzahl
@@ -492,7 +504,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_country
     label: Daten Land
@@ -501,14 +513,14 @@ dataset_fields:
     is_info: true
     info_text: To Do
 
-# Feld GP
+  # Feld GP
   - field_name: contact_voice
     label: Daten Telefon
     form_snippet: text_lhm.html
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_facsimile
     label: Daten Fax
@@ -516,7 +528,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_email
     label: Daten E-Mail
@@ -524,7 +536,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_online
     label: Daten Homepage
@@ -532,7 +544,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: contact_role
     label: Daten Funktion
@@ -553,7 +565,7 @@ dataset_fields:
     - value: processor
     - value: publisher
     - value: author
-  
+
   # Feld GP
   - field_name: dataquality_scopecode
     label: Datentyp
@@ -579,7 +591,7 @@ dataset_fields:
     - value: service
     - value: model
     - value: tile
-  
+
   # Feld GP
   - field_name: distrib_format
     label: Dienstearten und Versionen
@@ -594,15 +606,7 @@ dataset_fields:
     - field_name: distrib_format_version
       label: Version
       form_placeholder: z.B. 1.3.0
-  
-  # Feld GP
-  - field_name: ident_identifier
-    label: Metadaten-Identifikator
-    form_snippet: text_lhm.html
-    # required: true
-    is_info: true
-    info_text: To Do
-  
+
   # Feld GP
   - field_name: iso_type
     label: ISO-Typ
@@ -614,7 +618,7 @@ dataset_fields:
     - value: ''
     - value: SV_ServiceIdentification
     - value: MD_DataIdentification
-  
+
   # Feld GP
   - field_name: iso_standard
     label: ISO-Standard
@@ -622,7 +626,7 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
+
   # Feld GP
   - field_name: iso_version
     label: ISO-Version
@@ -630,13 +634,14 @@ dataset_fields:
     # required: true
     is_info: true
     info_text: To Do
-  
-  # Feld Master
-  - field_name: name
-    label: URL
-    preset: dataset_slug
-    form_placeholder: eg. my-dataset
-  
+
+  # Feld GP
+  - field_name: hierarchylevel_scopecode
+    label: Hierachielevel Scopecode
+    form_snippet: text_lhm.html
+    is_info: true
+    info_text: To Do
+
   # Feld GP
   - field_name: service_type
     label: Service-Typ
@@ -644,28 +649,20 @@ dataset_fields:
     is_info: true
     info_text: To Do
 
-#  # Feld GP
-#  - field_name: id
-#    label: Metadaten-Identifikator
-#    form_snippet: text_lhm.html
-#    required: true
-#    is_info: true
-#    info_text: Die CKAN Package ID wird als Metadaten-Identifikator verwendet. Eine Änderung ist nicht möglich.
-#  
-#  # Feld GP
-#  - field_name: file_identifier
-#    label: Datei-Identifikator
-#    form_snippet: text_lhm.html
-#    required: true
-#    is_info: true
-#    info_text: Hier wird der file identifier vom geharvesteten CSW übernommen. Bei Neuanlage eines Metadatensatzes ohne CSW-Harvesting wird die CKAN Package ID verwendet.
-  
+  # Feld GP
+  - field_name: ident_identifier
+    label: Metadaten-Identifikator
+    form_snippet: text_lhm.html
+    # required: true
+    is_info: true
+    info_text: Die CKAN Package ID wird als Metadaten-Identifikator verwendet. Eine Änderung ist nicht möglich.
+
   # Feld GP
   - field_name: file_identifier
     label: Datei-Identifikator
     form_snippet: text_lhm.html
     is_info: true
-    info_text: To Do
+    info_text: Hier wird der fileIdentifier vom geharvesteten CSW übernommen. Bei Neuanlage eines Metadatensatzes ohne CSW-Harvesting wird die CKAN Package ID verwendet.
 
     # Feld GP
   - field_name: bbox_east
@@ -696,24 +693,16 @@ dataset_fields:
     info_text: To Do
 
   # Feld GP
-  - field_name: hierarchylevel_scopecode
-    label: Hierachielevel Scopecode
-    form_snippet: text_lhm.html
-    is_info: true
-    info_text: To Do
-
-  # Feld GP
   - field_name: nil_reason
     label: NilReason
     preset: multiple_text
     is_info: true
     info_text: To Do
 
-  
   # Beispielfelder isodata
   #
-  # - field_name: harvest_source 
-  #   label: harvest_source 
+  # - field_name: harvest_source
+  #   label: harvest_source
   #- field_name: guid
   #  label: GUID
   # - field_name: metadata-language
@@ -736,7 +725,7 @@ dataset_fields:
   #   label: progress
   #  #- field_name: access_constraints
   #  #  label: access_constraints
-  
+
   #  #- field_name: responsible-party
   #  #  label: responsible-party
   #- field_name: spatial-reference-system
@@ -745,45 +734,41 @@ dataset_fields:
   #  label: spatial
   # - field_name: lineage
   #   label: lineage
-  
-  
-resource_fields:
 
+resource_fields:
   # Feld Master
   - field_name: url
     label: URL
     preset: resource_url_upload
-  
+
   # Feld Master
   - field_name: name
     label: Name
-    form_placeholder: 
-      en: e.g. January 2011 Gold Prices
-      de: z. B. 3D Stadtmodell
-  
+    form_snippet: text_lhm.html
+
   # Feld Master
   - field_name: description
     label: Beschreibung
     form_snippet: markdown.html
-    form_placeholder: Some useful notes about the data
-  
+
   # Feld GP
   - field_name: format
     label: Format
     preset: resource_format_autocomplete
-  
-#  # Feld GP
-#  - field_name: resource_locator_function
-#    label: Funktion
-#    preset: select_lhm
-#    is_info: true
-#    info_text: To Do
-#    choices:
-#    - value: ''
-#    - value: download
-#    - value: information
-#    - value: offlineAccess
-#    - value: order
-#    - value: search
 
-    
+  # Feld GP
+  - field_name: resource_locator_function
+    label: Funktion
+    preset: select_lhm
+    choices:
+    - value: ''
+    - value: download
+    - value: information
+    - value: offlineAccess
+    - value: order
+    - value: search
+
+  # Feld GP
+  - field_name: resource_locator_protocol
+    label: Protokoll
+    form_snippet: text_lhm.html
